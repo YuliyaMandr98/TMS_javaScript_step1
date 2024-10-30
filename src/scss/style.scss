@@ -224,8 +224,8 @@ border-radius: 15px;}
 .trello-card-done-item {
     border: 1px solid rgb(233, 158, 248);
     border-radius: 15px;
-    background-color: #eaeef0;
-    margin-bottom: 20px;
+    background-color: #b0dff7;
+    margin-bottom: 10px;
 }
 
 .trello-card-done-wrap-title{
@@ -242,6 +242,10 @@ border-radius: 15px;}
 
 .trello-card-done-button-delete{
     margin-right: 7px;
+}
+
+.trello-delete-all-button {
+    background-color: #b0dff7;
 }
 
 .trello-card-done-wrap-description {
@@ -273,17 +277,17 @@ border-radius: 15px;}
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(241, 248, 252, 0.4);
+    background-color: rgba(142, 149, 154, 0.4);
 }
 
 .modal-content {
-    background-color: #a4beda; 
+    background-color: #d5f8df; 
     margin: 10% auto;
     padding: 30px;
     border: 2px solid #c2d1f0; 
-    width: 90%;
+    width: 25%;
     max-width: 600px;
-    border-radius: 10px; 
+    border-radius: 15px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-size: 14px;
 }
@@ -299,7 +303,7 @@ textarea {
     padding: 12px;
     margin: 10px 0;
     box-sizing: border-box;
-    border: 2px solid #8ba3d6; 
+    border: 2px solid #bff1cd; 
     border-radius: 8px;
 }
 
@@ -317,7 +321,7 @@ textarea {
     padding: .6em 1.4em .5em .8em; width: 100%; 
     max-width: 100%; 
     box-sizing: border-box; 
-    margin: 0; 
+    margin: 0 0 20px 0; 
     border: 1px solid #aaa;
      box-shadow: 0 1px 0 1px rgba(0,0,0,.04); 
     border-radius: .5em;
@@ -330,35 +334,160 @@ textarea {
     background-position: right .7em top 50%, 0 0;
     background-size: .65em auto, 100%; 
     } 
-     .select-css::-ms-expand { display: none; } 
-     .select-css:hover { border-color: #888; } 
-     .select-css:focus { border-color: #aaa; 
-     box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
-     box-shadow: 0 0 0 3px -moz-mac-focusring; 
-    color: #222;
-     outline: none; 
-    } 
-     .select-css option { font-weight:normal; } 
-     *[dir="rtl"] .select-css, :root:lang(ar) .select-css, :root:lang(iw) .select-css { 
-    background-position: left .7em top 50%, 0 0; 
-    padding: .6em .8em .5em 1.4em; 
-    }
+
 
 .save-button {
-    background-color: #77a6dd; 
+    background-color: #78de95; 
     color: white;
-    padding: 14px 20px;
-    margin: 12px 19px 0 0;
+    padding: 10px 16px;
+    margin-right: 36px;
+    border: none;
+    border-radius: 8px;
+    margin-left: 90px; 
+    cursor: pointer;
+}
+
+.cancel-button {
+    background-color: #78de95; 
+    color: white;
+    padding: 10px 16px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
 }
 
-.cancel-button {
-    margin-left: 7px;
-    background-color: #77a6dd;  
+
+
+
+
+.modal-progress {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(126, 130, 134, 0.4);
+}
+
+.modal-content-progress {
+    background-color: #d5f8df; 
+    margin: 10% auto;
+    padding: 30px;
+    border: 2px solid #c2d1f0; 
+    width: 20%;
+    max-width: 600px;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+}
+
+
+.modal-title-progress {
+    display: block;
+    margin: auto;
+    width: 100px;
+    padding: 12px;
+    box-sizing: border-box; 
+    font-size: 20px;
+}
+
+.modal-description-progress {
+    display: block;
+    width: 90%;
+    margin: auto;
+    padding: 12px;
+    font-size: 16px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.save-button-progress {
+    background-color: #78de95; 
     color: white;
-    padding: 14px 20px;
+    padding: 10px 16px;
+    margin-right: 24px;
+    border: none;
+    border-radius: 8px;
+    margin-left: 63px; 
+    cursor: pointer;
+}
+
+.cancel-button-progress {
+    
+    background-color: #78de95;  
+    color: white;
+    padding: 10px 16px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+
+
+.modal-done {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(126, 130, 134, 0.4);
+}
+
+.modal-content-done {
+    background-color: #d5f8df; 
+    margin: 10% auto;
+    padding: 30px;
+    border: 2px solid #c2d1f0; 
+    width: 20%;
+    max-width: 600px;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+}
+
+
+.modal-title-done {
+    display: block;
+    margin: auto;
+    width: 100px;
+    padding: 12px;
+    box-sizing: border-box; 
+    font-size: 20px;
+}
+
+.modal-description-done {
+    display: block;
+    width: 90%;
+    margin: auto;
+    padding: 12px;
+    font-size: 16px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.save-button-done {
+    background-color: #78de95; 
+    color: white;
+    padding: 10px 16px;
+    margin-right: 24px;
+    border: none;
+    border-radius: 8px;
+    margin-left: 63px; 
+    cursor: pointer;
+}
+
+.cancel-button-done {
+    background-color: #78de95;  
+    color: white;
+    padding: 10px 16px;
     margin: 12px 0;
     border: none;
     border-radius: 8px;
