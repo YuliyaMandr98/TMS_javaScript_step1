@@ -1,9 +1,9 @@
-
 //создание общего контейнера
 const body = document.querySelector('body');
 const trelloContainer = document.createElement('div');
 trelloContainer.classList.add('trello-container');
 body.appendChild(trelloContainer);
+
 
 //СОЗДАНИЕ РОДИТЕЛЯ header
 const headerWrapTrello = document.createElement('header');
@@ -23,7 +23,7 @@ headerTrello.appendChild(headerText);
 //создание часов
 const clockHeaderTime = document.createElement('h3');
 clockHeaderTime.classList.add('trello-card-todo-header-info-time');
-clockHeaderTime.innerText = new Date().toLocaleString().slice(11,-3);
+clockHeaderTime.innerText = new Date().toLocaleString().slice(11, -3);
 headerTrello.appendChild(clockHeaderTime);
 
 //родитель для всех карточек
@@ -44,6 +44,7 @@ trelloWrapCard.appendChild(trelloWrapCardToDo);
 //создание карточки todo trello
 const trelloCardTodo = document.createElement('div');
 trelloCardTodo.classList.add('trello-card-todo');
+trelloCardTodo.setAttribute('id', 'todo');
 trelloWrapCardToDo.appendChild(trelloCardTodo);
 
 //создание шапки карточки todo trello
@@ -70,272 +71,360 @@ trelloCardTodo.appendChild(trelloCardTodoBody);
 
 //обновлене счётчиков
 function updateCounters() {
+    const trelloCardTodoCounter = document.querySelector('.trello-card-todo-counter');
+    const trelloCardTodoBody = document.querySelector('.trello-card-todo-body');
     trelloCardTodoCounter.innerText = `${trelloCardTodoBody.querySelectorAll('div.trello-card-todo-item').length}`
 }
 
 let todoCards = [];
-
+const currentTime = new Date().toLocaleString().slice(11, -3);
 
 // Функция для генерации уникального идентификатора
 function generateId() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
 
-function createToDoTrello(title, desc, id, user)
-{
+function createToDoTrello(title, desc, id, user, time) {
     const todo = {
         title: title,
-         desc: desc,
-         id: id || generateId(), 
-         user: user || 'user',
+        desc: desc,
+        id: id || generateId(),
+        user: user || 'user',
+        time: time || new Date().toLocaleString().slice(11, -3)
     };
 
     todoCards.push(todo);
     saveToDo();
-//создание карточки todo trello
-const trelloCardTodoItem = document.createElement('div');
-trelloCardTodoItem.classList.add('trello-card-todo-item');
-trelloCardTodoItem.setAttribute('id', todo.id);
-trelloCardTodoBody.appendChild(trelloCardTodoItem);
+    //создание карточки todo trello
+    const trelloCardTodoItem = document.createElement('div');
+    trelloCardTodoItem.classList.add('trello-card-todo-item');
+    trelloCardTodoItem.setAttribute('id', todo.id);
+    trelloCardTodoBody.appendChild(trelloCardTodoItem);
 
-//создание родителя title в карточке todo trello
-const trelloCardTodoWrapTitle = document.createElement('div');
-trelloCardTodoWrapTitle.classList.add('trello-card-todo-wrap-title');
-trelloCardTodoItem.appendChild(trelloCardTodoWrapTitle);
+    //создание родителя title в карточке todo trello
+    const trelloCardTodoWrapTitle = document.createElement('div');
+    trelloCardTodoWrapTitle.classList.add('trello-card-todo-wrap-title');
+    trelloCardTodoItem.appendChild(trelloCardTodoWrapTitle);
 
-//создание текста в title карточки todo trello
-const trelloCardTodoTitleText = document.createElement('h3');
-trelloCardTodoTitleText.classList.add('trello-card-todo-title-text');
-trelloCardTodoTitleText.textContent = 'Title: ' + title;
-trelloCardTodoWrapTitle.appendChild(trelloCardTodoTitleText);
+    //создание текста в title карточки todo trello
+    const trelloCardTodoTitleText = document.createElement('h3');
+    trelloCardTodoTitleText.classList.add('trello-card-todo-title-text');
+    trelloCardTodoTitleText.textContent = 'Title: ' + title;
+    trelloCardTodoWrapTitle.appendChild(trelloCardTodoTitleText);
 
-//создание родителя для кнопок в title
-const trelloCardTodoWrapButtons = document.createElement('div');
-trelloCardTodoWrapButtons.classList.add('trello-card-todo-wrap-buttons');
-trelloCardTodoWrapTitle.appendChild(trelloCardTodoWrapButtons);
+    //создание родителя для кнопок в title
+    const trelloCardTodoWrapButtons = document.createElement('div');
+    trelloCardTodoWrapButtons.classList.add('trello-card-todo-wrap-buttons');
+    trelloCardTodoWrapTitle.appendChild(trelloCardTodoWrapButtons);
 
-//создание кнопки edit
-const trelloCardTodoButtonEdit = document.createElement('button');
-trelloCardTodoButtonEdit.classList.add('trello-card-todo-button-edit');
-trelloCardTodoButtonEdit.innerText = 'Edit';
-trelloCardTodoWrapButtons.appendChild(trelloCardTodoButtonEdit);
-
-
+    //создание кнопки edit
+    const trelloCardTodoButtonEdit = document.createElement('button');
+    trelloCardTodoButtonEdit.classList.add('trello-card-todo-button-edit');
+    trelloCardTodoButtonEdit.innerText = 'Edit';
+    trelloCardTodoWrapButtons.appendChild(trelloCardTodoButtonEdit);
 
 
+    function createEditModal() {
 
-// Обработчик события для кнопки Edit
-trelloCardTodoButtonEdit.addEventListener('click', function() {
-    const modal = createModal(); // вызов уже созданного модального окна для редактирования
-    modal.style.display = 'block';
+        const editModal = document.createElement('div');
+        editModal.classList.add('modal');
 
-    // Заполнение полей модального окна существующими данными
-    const titleInput = modal.querySelector('.modal-input');
-    const descriptionInput = modal.querySelector('.modal-input2');
-    const saveButton = modal.querySelector('.save-button');
-    const cancelButton = modal.querySelector('.cancel-button');
-    const selectInput = modal.querySelector('.select-css');
+        const editModalContent = document.createElement('div');
+        editModalContent.classList.add('modal-content');
 
-    //присваиваю аргументам функции значения переменных
-    titleInput.value = title;
-    descriptionInput.value = desc;
-    selectInput.value = user;
+        const editTitleInput = document.createElement('input');
+        editTitleInput.classList.add('modal-input');
+        editTitleInput.setAttribute('type', 'text');
+        editTitleInput.setAttribute('placeholder', 'Title');
+        editModalContent.appendChild(editTitleInput);
 
-    cancelButton.addEventListener('click', function() {
-        modal.style.display = 'none';
+        const editDescriptionInput = document.createElement('textarea');
+        editDescriptionInput.classList.add('modal-input2');
+        editDescriptionInput.setAttribute('placeholder', 'Description');
+        editModalContent.appendChild(editDescriptionInput);
+
+        const editSelectId = `select-${Date.now()}`; // Уникальный идентификатор для выбора пользователя
+        const editSelect = document.createElement('select');
+        editSelect.classList.add('select-css');
+        editSelect.setAttribute('id', editSelectId);
+        //установить значение уже выбранного option
+        const selectedUser = todo.user;
+        const selectedOption = document.querySelector(`#${editSelectId} option[value="${selectedUser}"]`);
+        if (selectedOption) {
+            selectedOption.selected = true;
+        } else {
+            const defaultOption = document.createElement('option');
+            defaultOption.value = selectedUser;
+            defaultOption.innerText = selectedUser;
+            editSelect.appendChild(defaultOption);
+        }
+        editModalContent.appendChild(editSelect);
+
+        //получение пользователей из api
+        function fetchUsersEdit() {
+            fetch("https://jsonplaceholder.typicode.com/users")
+                .then((response) => {
+                    return response.json();
+                })
+                .then((users) => {
+                    users.forEach((user) => {
+                        const option1 = document.createElement('option');
+                        option1.classList.add('option');
+                        option1.setAttribute('value', user.name);
+                        option1.innerText = user.name;
+                        editSelect.appendChild(option1);
+                        console.log(user.name);
+                    });
+                })
+                .catch((error) => console.error("Error fetching users", error));
+        }
+
+        fetchUsersEdit();
+
+        const editSaveButton = document.createElement('button');
+        editSaveButton.classList.add('save-button');
+        editSaveButton.innerText = 'Confirm';
+        editSaveButton.addEventListener('click', function () {
+
+            const title = editTitleInput.value;
+            const desc = editDescriptionInput.value;
+            const user = editSelect.value; // Получение выбранного пользователя
+            const id = todo.id;
+            const time = todo.time; // Получение текущего времени
+
+            todo.title = title;
+            todo.desc = desc;
+            todo.user = user;
+            todo.id = id;
+            todo.time = time;
+
+            editModal.style.display = 'none';
+        });
+        editModalContent.appendChild(editSaveButton);
+
+        const editCancelButton = document.createElement('button');
+        editCancelButton.classList.add('cancel-button');
+        editCancelButton.innerText = 'Cancel';
+        editCancelButton.addEventListener('click', function () {
+            editModal.style.display = 'none';
+        });
+        editModalContent.appendChild(editCancelButton);
+
+        editModal.appendChild(editModalContent);
+        document.body.appendChild(editModal);
+
+
+
+        return editModal;
+    }
+
+
+
+    // Обработчик события для кнопки Edit
+    trelloCardTodoButtonEdit.addEventListener('click', function () {
+        const modal = createEditModal(); // вызов уже созданного модального окна для редактирования
+        modal.style.display = 'block';
+
+        // Заполнение полей модального окна существующими данными
+        const editTitleInput = modal.querySelector('.modal-input');
+        const editDescriptionInput = modal.querySelector('.modal-input2');
+        const editSaveButton = modal.querySelector('.save-button');
+        const editCancelButton = modal.querySelector('.cancel-button');
+        const editSelect = modal.querySelector('.select-css');
+
+        //присваиваю аргументам функции значения переменных
+        editTitleInput.value = title;
+        editDescriptionInput.value = desc;
+        editSelect.value = user;
+
+
+        editCancelButton.addEventListener('click', function () {
+            const editModal = document.querySelector('.modal');
+            editModal.style.display = 'none';
+        });
+
+        editSaveButton.addEventListener('click', function () {
+
+            const newTitle = editTitleInput.value;
+            const newDesc = editDescriptionInput.value;
+            const newUser = editSelect.value;
+            const newId = todo.id; // Использую текущий идентификатор
+            const newTime = todo.time; // Использую текущую дату
+
+
+            // Обновление данных карточки
+            title = newTitle;
+            desc = newDesc;
+            user = newUser;
+            id = newId; // Обновление идентификатора
+            time = newTime; // Обновление даты
+
+            // Обновление текста на карточке
+            trelloCardTodoTitleText.textContent = 'Title: ' + newTitle;
+            trelloCardTodoDescription.textContent = 'Description: ' + newDesc;
+            trelloCardTodoUserInfoText.textContent = 'User: ' + newUser;
+            trelloCardTodoUserInfoTime.textContent = newTime;
+
+            saveToDo();
+            updateCounters(); //обновить счётчик после удаления
+
+            editTitleInput.style.display = 'none';
+        });
     });
 
-    saveButton.addEventListener('click', function() {
-        
-        const newTitle = titleInput.value;
-        const newDesc = descriptionInput.value;
-        const newUser = selectInput.value;
 
-        // Обновление данных карточки
-        title = newTitle;
-        desc = newDesc;
-        user = newUser;
+    //создание кнопки delete
+    const trelloCardTodoButtonDelete = document.createElement('button');
+    trelloCardTodoButtonDelete.classList.add('trello-card-todo-button-delete');
+    trelloCardTodoButtonDelete.innerText = 'Delete';
+    trelloCardTodoWrapButtons.appendChild(trelloCardTodoButtonDelete);
 
-        // Обновление текста на карточке
-        trelloCardTodoTitleText.textContent = 'Title: ' + newTitle;
-        trelloCardTodoDescription.textContent = 'Description: ' + newDesc;
-        trelloCardTodoUserInfoText.textContent = 'User: ' + newUser;
-        
+    // клик trelloCardTodoButtonDelete
+    trelloCardTodoButtonDelete.addEventListener('click', function () {
 
-        //удалить редактируемую карточку 
-        const cardToDo = document.querySelector('.trello-card-todo-item');
-        cardToDo.remove();
+        // Удаление карточки из todoCards
         todoCards = todoCards.filter(function (elem) {
             return elem.id !== todo.id;
         });
+
+        // Сохранение обновленного списка карточек в "TO DO" в localStorage
         saveToDo();
+
+        // Удаление карточки из DOM
+        trelloCardTodoItem.remove();
+
         updateCounters(); //обновить счётчик после удаления
-        
-        modal.style.display = 'none';
-    });
-});
-
-
-//создание кнопки delete
-const trelloCardTodoButtonDelete = document.createElement('button');
-trelloCardTodoButtonDelete.classList.add('trello-card-todo-button-delete');
-trelloCardTodoButtonDelete.innerText = 'Delete';
-trelloCardTodoWrapButtons.appendChild(trelloCardTodoButtonDelete);
-
-// клик trelloCardTodoButtonDelete
-trelloCardTodoButtonDelete.addEventListener('click', function() {
-    const idToDelete = todo.id;
-
-    // Удаление карточки из todoCards
-    todoCards = todoCards.filter(function (elem) {
-        return elem.id !== idToDelete;
     });
 
-    // Обновление счётчика
-    updateCounters();
-
-    // Сохранение обновленного списка карточек в "TO DO" в localStorage
-    saveToDo();
-
-    // Удаление карточки из DOM
-    trelloCardTodoItem.remove();
-
-    updateCounters(); //обновить счётчик после удаления
-});
 
 
+    //создание родителя для description в todo
+    const trelloCardTodoWrapDescription = document.createElement('div');
+    trelloCardTodoWrapDescription.classList.add('trello-card-todo-wrap-description');
+    trelloCardTodoItem.appendChild(trelloCardTodoWrapDescription);
 
-//создание родителя для description в todo
-const trelloCardTodoWrapDescription = document.createElement('div');
-trelloCardTodoWrapDescription.classList.add('trello-card-todo-wrap-description');
-trelloCardTodoItem.appendChild(trelloCardTodoWrapDescription);
 
+    //создание description в todo
+    const trelloCardTodoDescription = document.createElement('h3');
+    trelloCardTodoDescription.classList.add('trello-card-todo-description');
+    trelloCardTodoDescription.textContent = 'Description: ' + desc;
+    trelloCardTodoWrapDescription.appendChild(trelloCardTodoDescription);
 
-//создание description в todo
-const trelloCardTodoDescription = document.createElement('h3');
-trelloCardTodoDescription.classList.add('trello-card-todo-description');
-trelloCardTodoDescription.textContent = 'Description: ' +  desc;
-trelloCardTodoWrapDescription.appendChild(trelloCardTodoDescription);
-
-//создание кнопки >
-const trelloCardTodoButtonMore = document.createElement('button');
-trelloCardTodoButtonMore.classList.add('trello-card-todo-button-more');
-trelloCardTodoButtonMore.innerText = '>';
-trelloCardTodoWrapDescription.appendChild(trelloCardTodoButtonMore);
+    //создание кнопки '>'
+    const trelloCardTodoButtonMore = document.createElement('button');
+    trelloCardTodoButtonMore.classList.add('trello-card-todo-button-more');
+    trelloCardTodoButtonMore.innerText = '>';
+    trelloCardTodoWrapDescription.appendChild(trelloCardTodoButtonMore);
 
 
 
-function createModalProgress() {
-    const modalProgress = document.createElement('div');
-    modalProgress.classList.add('modal-progress');
+    function createModalProgress() {
+        const modalProgress = document.createElement('div');
+        modalProgress.classList.add('modal-progress');
 
-    const modalContentProgress = document.createElement('div');
-    modalContentProgress.classList.add('modal-content-progress');
+        const modalContentProgress = document.createElement('div');
+        modalContentProgress.classList.add('modal-content-progress');
 
-    const titleProgress = document.createElement('h3');
-    titleProgress.classList.add('modal-title-progress');
-    titleProgress.textContent = 'Warning!';
-    modalContentProgress.appendChild(titleProgress);
+        const titleProgress = document.createElement('h3');
+        titleProgress.classList.add('modal-title-progress');
+        titleProgress.textContent = 'Warning!';
+        modalContentProgress.appendChild(titleProgress);
 
-    const descriptionProgress = document.createElement('h4');
-    descriptionProgress.classList.add('modal-description-progress');
-    descriptionProgress.textContent = `Пожалуйста выполните предыдущие задачи перед добавлением новых задач`
-    modalContentProgress.appendChild(descriptionProgress);
+        const descriptionProgress = document.createElement('h4');
+        descriptionProgress.classList.add('modal-description-progress');
+        descriptionProgress.textContent = `Пожалуйста выполните предыдущие задачи перед добавлением новых задач`
+        modalContentProgress.appendChild(descriptionProgress);
 
-    const saveButtonProgress = document.createElement('button');
-    saveButtonProgress.classList.add('save-button-progress');
-    saveButtonProgress.innerText = 'Confirm';
-    saveButtonProgress.addEventListener('click', function() {
+        const saveButtonProgress = document.createElement('button');
+        saveButtonProgress.classList.add('save-button-progress');
+        saveButtonProgress.innerText = 'Confirm';
+        saveButtonProgress.addEventListener('click', function () {
 
-        modalProgress.style.display = 'none';
-    });
-    modalContentProgress.appendChild(saveButtonProgress);
+            modalProgress.style.display = 'none';
+        });
+        modalContentProgress.appendChild(saveButtonProgress);
 
-    const cancelButtonProgress = document.createElement('button');
-    cancelButtonProgress.classList.add('cancel-button-progress');
-    cancelButtonProgress.innerText = 'Cancel';
-    cancelButtonProgress.addEventListener('click', function() {
-        modalProgress.style.display = 'none';
-    });
-    modalContentProgress.appendChild(cancelButtonProgress);
+        const cancelButtonProgress = document.createElement('button');
+        cancelButtonProgress.classList.add('cancel-button-progress');
+        cancelButtonProgress.innerText = 'Cancel';
+        cancelButtonProgress.addEventListener('click', function () {
+            modalProgress.style.display = 'none';
+        });
+        modalContentProgress.appendChild(cancelButtonProgress);
 
-    modalProgress.appendChild(modalContentProgress);
-    document.body.appendChild(modalProgress);
+        modalProgress.appendChild(modalContentProgress);
+        document.body.appendChild(modalProgress);
 
-    return modalProgress;
-}
-
-// клик trelloCardTodoButtonMore
-trelloCardTodoButtonMore.addEventListener('click', function() {
-    const inProgressCards = JSON.parse(localStorage.getItem('inProgressCards')) || [];
-
-    const MAX_CARDS = 6;
-
-    if (inProgressCards.length >= MAX_CARDS) {
-        // Показываем модальное окно
-        const modalProgress = createModalProgress();
-        modalProgress.style.display = "block";
-
-        // Закрытие модального окна при клике на крестик
-        const span = document.querySelector(".cancel-button-progress");
-        span.onclick = function() {
-            modalProgress.style.display = "none";
-        }
-
-        // Закрытие модального окна при клике вне окна
-        window.onclick = function(event) {
-            if (event.target == modalProgress) {
-                modalProgress.style.display = "none";
-            }
-        }
-
-        return;
+        return modalProgress;
     }
 
-    // Получение данных карточки из раздела "TO DO"
-    const title = todo.title;
-    const desc = todo.desc;
-    const id = todo.id;
-    const user = todo.user;
+    // клик trelloCardTodoButtonMore
+    trelloCardTodoButtonMore.addEventListener('click', function () {
+        const inProgressCards = JSON.parse(localStorage.getItem('inProgressCards')) || [];
 
-    // Создание новой карточки в разделе "IN PROGRESS"
-    createInProgress(title, desc, id, user);
+        const max_cards = 6;
 
-    // Добавление новой карточки в массив inProgressCards
-    inProgressCards.push({ title, desc, id, user });
-    saveInProgress()
+        if (inProgressCards.length >= max_cards) {
+            // Показываем модальное окно
+            const modalProgress = createModalProgress();
+            modalProgress.style.display = "block";
+
+            // Закрытие модального окна при клике на крестик
+            const span = document.querySelector(".cancel-button-progress");
+            span.onclick = function () {
+                modalProgress.style.display = "none";
+            }
+
+            // Закрытие модального окна при клике вне окна
+            window.onclick = function (event) {
+                if (event.target == modalProgress) {
+                    modalProgress.style.display = "none";
+                }
+            }
+
+            return;
+        }
+
+        // Создание новой карточки в разделе "IN PROGRESS"
+        createInProgress(todo.title, todo.desc, todo.id, todo.user, todo.time);
+
+        // Добавление новой карточки в массив inProgressCards
+        inProgressCards.push({ title, desc, id, user, time });
+        saveInProgress()
 
 
-    // Удаление карточки из "TO DO" и обновление списка карточек в localStorage
-    trelloCardTodoItem.remove();
-    todoCards = todoCards.filter(function (elem) {
-        return elem.id !== id;
+        // Удаление карточки из "TO DO" и обновление списка карточек в localStorage
+        trelloCardTodoItem.remove();
+        todoCards = todoCards.filter(function (elem) {
+            return elem.id !== id;
+        });
+        trelloCardTodoCounter.innerText = parseInt(trelloCardTodoCounter.innerText) - 1;
+        saveToDo(); // Сохранение обновленного списка карточек в "TO DO"
     });
-    trelloCardTodoCounter.innerText = parseInt(trelloCardTodoCounter.innerText) - 1;
-    saveToDo(); // Сохранение обновленного списка карточек в "TO DO"
-});
-    
 
 
 
 
 
-//создание родителя для описания пользователя и времени добавления карточки
-const trelloCardTodoWrapUserInfo = document.createElement('div');
-trelloCardTodoWrapUserInfo.classList.add('trello-card-todo-wrap-user-info');
-trelloCardTodoItem.appendChild(trelloCardTodoWrapUserInfo);
 
-//создание текста в описании пользователя и времени добавления карточки
-const trelloCardTodoUserInfoText = document.createElement('h3');
-trelloCardTodoUserInfoText.classList.add('trello-card-todo-user-info-text');
-trelloCardTodoUserInfoText.innerText = 'User: ' + user;
-trelloCardTodoWrapUserInfo.appendChild(trelloCardTodoUserInfoText);
+    //создание родителя для описания пользователя и времени добавления карточки
+    const trelloCardTodoWrapUserInfo = document.createElement('div');
+    trelloCardTodoWrapUserInfo.classList.add('trello-card-todo-wrap-user-info');
+    trelloCardTodoItem.appendChild(trelloCardTodoWrapUserInfo);
 
-//создание текста времени добавления карточки
-const trelloCardTodoUserInfoTime = document.createElement('h3');
-trelloCardTodoUserInfoTime.classList.add('trello-card-todo-user-info-time');
-trelloCardTodoUserInfoTime.innerText = new Date().toLocaleString().slice(11,-3);
-trelloCardTodoWrapUserInfo.appendChild(trelloCardTodoUserInfoTime); }
+    //создание текста в описании пользователя и времени добавления карточки
+    const trelloCardTodoUserInfoText = document.createElement('h3');
+    trelloCardTodoUserInfoText.classList.add('trello-card-todo-user-info-text');
+    trelloCardTodoUserInfoText.innerText = 'User: ' + user;
+    trelloCardTodoWrapUserInfo.appendChild(trelloCardTodoUserInfoText);
+
+    //создание текста времени добавления карточки
+    const trelloCardTodoUserInfoTime = document.createElement('h3');
+    trelloCardTodoUserInfoTime.classList.add('trello-card-todo-user-info-time');
+    trelloCardTodoUserInfoTime.innerText = new Date().toLocaleString().slice(11, -3);
+    time = trelloCardTodoUserInfoTime.innerText;
+    trelloCardTodoWrapUserInfo.appendChild(trelloCardTodoUserInfoTime);
+}
 
 //кнопка add todo
 const trelloCardTodoButtonAdd = document.createElement('button');
@@ -370,13 +459,35 @@ function createModal() {
     const select1 = document.createElement('select');
     select1.classList.add('select-css');
     select1.setAttribute('id', selectId);
-    select1.innerHTML = '<option value="Mandryk Yuliya">Mandryk Yuliya</option> <option value="Ivanov Ivan">Ivanov Ivan</option> <option value="Selezneva Yana">Selezneva Yana</option> <option value="Kozlova Elena">Kozlova Elena</option> <option value="Kotova Sveta">Kotova Sveta</option>';
+    //option
+
+    // select1.innerHTML = '<option value="Mandryk Yuliya">Mandryk Yuliya</option> <option value="Ivanov Ivan">Ivanov Ivan</option> <option value="Selezneva Yana">Selezneva Yana</option> <option value="Kozlova Elena">Kozlova Elena</option> <option value="Kotova Sveta">Kotova Sveta</option>';
     modalContent.appendChild(select1);
+
+    function fetchUsers() {
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then((response) => {
+                return response.json();
+            })
+            .then((users) => {
+                users.forEach((user) => {
+                    const option1 = document.createElement('option');
+                    option1.classList.add('option');
+                    option1.setAttribute('value', user.name);
+                    option1.innerText = user.name;
+                    select1.appendChild(option1);
+                    console.log(user.name + " Email: " + user.email);
+                });
+            })
+            .catch((error) => console.error("Error fetching users", error));
+    }
+
+    fetchUsers();
 
     const saveButton = document.createElement('button');
     saveButton.classList.add('save-button');
     saveButton.innerText = 'Confirm';
-    saveButton.addEventListener('click', function() {
+    saveButton.addEventListener('click', function () {
 
         const title = titleInput.value;
         const desc = descriptionInput.value;
@@ -394,7 +505,7 @@ function createModal() {
     const cancelButton = document.createElement('button');
     cancelButton.classList.add('cancel-button');
     cancelButton.innerText = 'Cancel';
-    cancelButton.addEventListener('click', function() {
+    cancelButton.addEventListener('click', function () {
         modal.style.display = 'none';
     });
     modalContent.appendChild(cancelButton);
@@ -406,7 +517,7 @@ function createModal() {
 }
 
 // Клик по add
-trelloCardTodoButtonAdd.addEventListener('click', function() {
+trelloCardTodoButtonAdd.addEventListener('click', function () {
     createModal().style.display = 'block';
 });
 
@@ -421,6 +532,7 @@ trelloWrapCard.appendChild(trelloWrapCardInProgress);
 //создание карточки in progress trello
 const trelloCardInProgress = document.createElement('div');
 trelloCardInProgress.classList.add('trello-card-in-progress');
+trelloCardInProgress.setAttribute('id', 'progress');
 trelloWrapCardInProgress.appendChild(trelloCardInProgress);
 
 //создание шапки карточки in progress trello
@@ -449,128 +561,133 @@ trelloCardInProgress.appendChild(trelloCardInProgressBody);
 let inProgressCards = [];
 
 
-    //создание карточки in progress trello
-function createInProgress(title, desc, id, user) {
+//создание карточки in progress trello
+function createInProgress(title, desc, id, user, time) {
     const todo2 = {
         title: title,
-         desc: desc,
-         id: id, 
-         user: user || 'user',
+        desc: desc,
+        id: id,
+        user: user,
+        time: time,
     };
 
     inProgressCards.push(todo2);
     saveInProgress();
 
-const trelloCardInProgressItem = document.createElement('div');
-trelloCardInProgressItem.classList.add('trello-card-in-progress-item');
-trelloCardInProgressBody.appendChild(trelloCardInProgressItem);
+    const trelloCardInProgressItem = document.createElement('div');
+    trelloCardInProgressItem.classList.add('trello-card-in-progress-item');
+    trelloCardInProgressBody.appendChild(trelloCardInProgressItem);
 
-//создание родителя title в карточке in progress trello
-const trelloCardInProgressWrapTitle = document.createElement('div');
-trelloCardInProgressWrapTitle.classList.add('trello-card-in-progress-wrap-title');
-trelloCardInProgressItem.appendChild(trelloCardInProgressWrapTitle);
+    //создание родителя title в карточке in progress trello
+    const trelloCardInProgressWrapTitle = document.createElement('div');
+    trelloCardInProgressWrapTitle.classList.add('trello-card-in-progress-wrap-title');
+    trelloCardInProgressItem.appendChild(trelloCardInProgressWrapTitle);
 
-//создание текста в title карточки in progress trello
-const trelloCardInProgressTitleText = document.createElement('h3');
-trelloCardInProgressTitleText.classList.add('trello-card-in-progress-title-text');
-const trelloTitle = document.querySelector('.trello-card-todo-title-text')
-trelloCardInProgressTitleText.innerText = 'Title: ' + title;
-trelloCardInProgressWrapTitle.appendChild(trelloCardInProgressTitleText);
+    //создание текста в title карточки in progress trello
+    const trelloCardInProgressTitleText = document.createElement('h3');
+    trelloCardInProgressTitleText.classList.add('trello-card-in-progress-title-text');
+    const trelloTitle = document.querySelector('.trello-card-todo-title-text')
+    trelloCardInProgressTitleText.innerText = 'Title: ' + title;
+    trelloCardInProgressWrapTitle.appendChild(trelloCardInProgressTitleText);
 
-//создание родителя для кнопок в title
-const trelloCardInProgressWrapButtons = document.createElement('div');
-trelloCardInProgressWrapButtons.classList.add('trello-card-in-progress-wrap-buttons');
-trelloCardInProgressWrapTitle.appendChild(trelloCardInProgressWrapButtons);
+    //создание родителя для кнопок в title
+    const trelloCardInProgressWrapButtons = document.createElement('div');
+    trelloCardInProgressWrapButtons.classList.add('trello-card-in-progress-wrap-buttons');
+    trelloCardInProgressWrapTitle.appendChild(trelloCardInProgressWrapButtons);
 
-//создание кнопки back
-const trelloCardInProgressButtonBack = document.createElement('button');
-trelloCardInProgressButtonBack.classList.add('trello-card-in-progress-button-back');
-trelloCardInProgressButtonBack.innerText = 'Back';
-trelloCardInProgressWrapButtons.appendChild(trelloCardInProgressButtonBack);
+    //создание кнопки back
+    const trelloCardInProgressButtonBack = document.createElement('button');
+    trelloCardInProgressButtonBack.classList.add('trello-card-in-progress-button-back');
+    trelloCardInProgressButtonBack.innerText = 'Back';
+    trelloCardInProgressWrapButtons.appendChild(trelloCardInProgressButtonBack);
 
-// при нажатии на кнопку back
-trelloCardInProgressButtonBack.addEventListener('click', function() {
-    // Получение данных карточки из раздела "IN PROGRESS"
-    const title = todo2.title;
-    const desc = todo2.desc;
-    const id = todo2.id;
-    const user = todo2.user;
+    // при нажатии на кнопку back
+    trelloCardInProgressButtonBack.addEventListener('click', function () {
+        // Получение данных карточки из раздела "IN PROGRESS"
+        const title = todo2.title;
+        const desc = todo2.desc;
+        const id = todo2.id;
+        const user = todo2.user;
+        const time = todo2.time;
 
-    // Создание новой карточки в разделе "to do"
-    createToDoTrello(title, desc, id, user);
-    updateCounters();
+        // Создание новой карточки в разделе "to do"
+        createToDoTrello(title, desc, id, user, time);
+        updateCounters();
 
-    // Сохранение обновленного списка карточек в "to do" в localStorage
-    saveToDo();
+        // Сохранение обновленного списка карточек в "to do" в localStorage
+        saveToDo();
 
-    // Удаление карточки из "in prjgress" и обновление списка карточек в localStorage
-    trelloCardInProgressItem.remove();
-    inProgressCards = inProgressCards.filter(function (elem) {
-        return elem.id !== id;
+        // Удаление карточки из "in prjgress" и обновление списка карточек в localStorage
+        trelloCardInProgressItem.remove();
+        inProgressCards = inProgressCards.filter(function (elem) {
+            return elem.id !== id;
+        });
+        trelloCardInProgressCounter.innerText = parseInt(trelloCardInProgressCounter.innerText) - 1;
+        saveInProgress(); // Сохранение обновленного списка карточек в "in progress" в localStorage
     });
-    trelloCardInProgressCounter.innerText = parseInt(trelloCardInProgressCounter.innerText) - 1;
-    saveInProgress(); // Сохранение обновленного списка карточек в "in progress" в localStorage
-});
 
-//создание кнопки complete
-const trelloCardInProgressButtonComplete = document.createElement('button');
-trelloCardInProgressButtonComplete.classList.add('trello-card-in-progress-button-complete');
-trelloCardInProgressButtonComplete.innerText = 'Complete';
-trelloCardInProgressWrapButtons.appendChild(trelloCardInProgressButtonComplete);
+    //создание кнопки complete
+    const trelloCardInProgressButtonComplete = document.createElement('button');
+    trelloCardInProgressButtonComplete.classList.add('trello-card-in-progress-button-complete');
+    trelloCardInProgressButtonComplete.innerText = 'Complete';
+    trelloCardInProgressWrapButtons.appendChild(trelloCardInProgressButtonComplete);
 
-// при нажатии на кнопку complete
-trelloCardInProgressButtonComplete.addEventListener('click', function() {
-    // Получение данных карточки из раздела "IN PROGRESS"
-    const title = todo2.title;
-    const desc = todo2.desc;
-    const id = todo2.id;
-    const user = todo2.user;
+    // при нажатии на кнопку complete
+    trelloCardInProgressButtonComplete.addEventListener('click', function () {
+        // Получение данных карточки из раздела "IN PROGRESS"
+        const title = todo2.title;
+        const desc = todo2.desc;
+        const id = todo2.id;
+        const user = todo2.user;
+        const time = todo2.time;
 
-    // Создание новой карточки в разделе "done"
-    createDone(title, desc, id, user);
-    //обновить счётчик карточек в done
-    trelloCardDoneCounter.innerText = parseInt(trelloCardDoneCounter.innerText) + 1;
+        // Создание новой карточки в разделе "done"
+        createDone(title, desc, id, user, time);
+        //обновить счётчик карточек в done
+        trelloCardDoneCounter.innerText = parseInt(trelloCardDoneCounter.innerText) + 1;
 
-    // Сохранение обновленного списка карточек в "done" в localStorage
-    saveDone();
+        // Сохранение обновленного списка карточек в "done" в localStorage
+        saveDone();
 
-    // Удаление карточки из "in progress" и обновление списка карточек в localStorage
-    trelloCardInProgressItem.remove();
-    inProgressCards = inProgressCards.filter(function (elem) {
-        return elem.id !== id;
-    });
-    trelloCardInProgressCounter.innerText = parseInt(trelloCardInProgressCounter.innerText) - 1;
-    saveInProgress();})
+        // Удаление карточки из "in progress" и обновление списка карточек в localStorage
+        trelloCardInProgressItem.remove();
+        inProgressCards = inProgressCards.filter(function (elem) {
+            return elem.id !== id;
+        });
+        trelloCardInProgressCounter.innerText = parseInt(trelloCardInProgressCounter.innerText) - 1;
+        saveInProgress();
+    })
 
-//создание родителя для description в in progress
-const trelloCardInProgressWrapDescription = document.createElement('div');
-trelloCardInProgressWrapDescription.classList.add('trello-card-in-progress-wrap-description');
-trelloCardInProgressItem.appendChild(trelloCardInProgressWrapDescription);
+    //создание родителя для description в in progress
+    const trelloCardInProgressWrapDescription = document.createElement('div');
+    trelloCardInProgressWrapDescription.classList.add('trello-card-in-progress-wrap-description');
+    trelloCardInProgressItem.appendChild(trelloCardInProgressWrapDescription);
 
-//создание description в in progress
-const trelloCardInProgressDescription = document.createElement('h3');
-trelloCardInProgressDescription.classList.add('trello-card-in-progress-description');
-trelloCardInProgressDescription.innerText = 'Description: ' + desc;
-trelloCardInProgressWrapDescription.appendChild(trelloCardInProgressDescription);
+    //создание description в in progress
+    const trelloCardInProgressDescription = document.createElement('h3');
+    trelloCardInProgressDescription.classList.add('trello-card-in-progress-description');
+    trelloCardInProgressDescription.innerText = 'Description: ' + desc;
+    trelloCardInProgressWrapDescription.appendChild(trelloCardInProgressDescription);
 
-//создание родителя для описания пользователя и времени добавления карточки in progress
-const trelloCardInProgressWrapUserInfo = document.createElement('div');
-trelloCardInProgressWrapUserInfo.classList.add('trello-card-inProgress-wrap-user-info');
-trelloCardInProgressItem.appendChild(trelloCardInProgressWrapUserInfo);
+    //создание родителя для описания пользователя и времени добавления карточки in progress
+    const trelloCardInProgressWrapUserInfo = document.createElement('div');
+    trelloCardInProgressWrapUserInfo.classList.add('trello-card-inProgress-wrap-user-info');
+    trelloCardInProgressItem.appendChild(trelloCardInProgressWrapUserInfo);
 
-//создание текста в описании пользователя и времени добавления карточки
-const trelloCardInProgressUserInfoText = document.createElement('h3');
-trelloCardInProgressUserInfoText.classList.add('trello-card-inProgress-user-info-text');
-trelloCardInProgressUserInfoText.innerText = 'User: ' + user;
-trelloCardInProgressWrapUserInfo.appendChild(trelloCardInProgressUserInfoText);
+    //создание текста в описании пользователя и времени добавления карточки
+    const trelloCardInProgressUserInfoText = document.createElement('h3');
+    trelloCardInProgressUserInfoText.classList.add('trello-card-inProgress-user-info-text');
+    trelloCardInProgressUserInfoText.innerText = 'User: ' + user;
+    trelloCardInProgressWrapUserInfo.appendChild(trelloCardInProgressUserInfoText);
 
-//создание текста времени добавления карточки
-const trelloCardInProgressUserInfoTime = document.createElement('h3');
-trelloCardInProgressUserInfoTime.classList.add('trello-card-inProgress-user-info-time');
-trelloCardInProgressUserInfoTime.innerText = new Date().toLocaleString().slice(11,-3);
-trelloCardInProgressWrapUserInfo.appendChild(trelloCardInProgressUserInfoTime);
-//увеличение счётчика in progress
-trelloCardInProgressCounter.innerText = parseInt(trelloCardInProgressCounter.innerText) + 1;
+    //создание текста времени добавления карточки
+    const trelloCardInProgressUserInfoTime = document.createElement('h3');
+    trelloCardInProgressUserInfoTime.classList.add('trello-card-inProgress-user-info-time');
+    trelloCardInProgressUserInfoTime.innerText = new Date().toLocaleString().slice(11, -3);
+    time = trelloCardInProgressUserInfoTime.innerText;
+    trelloCardInProgressWrapUserInfo.appendChild(trelloCardInProgressUserInfoTime);
+    //увеличение счётчика in progress
+    trelloCardInProgressCounter.innerText = parseInt(trelloCardInProgressCounter.innerText) + 1;
 }
 
 
@@ -584,6 +701,7 @@ trelloWrapCard.appendChild(trelloWrapCardDone);
 //создание карточки done trello
 const trelloCardDone = document.createElement('div');
 trelloCardDone.classList.add('trello-card-done');
+trelloCardDone.setAttribute('id', 'done');
 trelloWrapCardDone.appendChild(trelloCardDone);
 
 //создание шапки карточки done trello
@@ -612,83 +730,85 @@ trelloCardDone.appendChild(trelloCardDoneBody);
 // Инициализация массива для карточек в разделе "IN PROGRESS"
 let doneCards = [];
 
-    //создание карточки done trello
-function createDone(title, desc, id, user) {
+//создание карточки done trello
+function createDone(title, desc, id, user, time) {
     const todo3 = {
         title: title,
-         desc: desc,
-         id: id, 
-         user: user || 'user',
+        desc: desc,
+        id: id,
+        user: user,
+        time: time,
     };
 
     doneCards.push(todo3);
     saveDone();
 
 
-//создание карточки done trello
-const trelloCardDoneItem = document.createElement('div');
-trelloCardDoneItem.classList.add('trello-card-done-item');
-trelloCardDoneBody.appendChild(trelloCardDoneItem);
+    //создание карточки done trello
+    const trelloCardDoneItem = document.createElement('div');
+    trelloCardDoneItem.classList.add('trello-card-done-item');
+    trelloCardDoneBody.appendChild(trelloCardDoneItem);
 
-//создание родителя title в карточке done trello
-const trelloCardDoneWrapTitle = document.createElement('div');
-trelloCardDoneWrapTitle.classList.add('trello-card-done-wrap-title');
-trelloCardDoneItem.appendChild(trelloCardDoneWrapTitle);
+    //создание родителя title в карточке done trello
+    const trelloCardDoneWrapTitle = document.createElement('div');
+    trelloCardDoneWrapTitle.classList.add('trello-card-done-wrap-title');
+    trelloCardDoneItem.appendChild(trelloCardDoneWrapTitle);
 
-//создание текста в title карточки done trello
-const trelloCardDoneTitleText = document.createElement('h3');
-trelloCardDoneTitleText.classList.add('trello-card-done-title-text');
-trelloCardDoneTitleText.innerText = 'Title: ' + title;
-trelloCardDoneWrapTitle.appendChild(trelloCardDoneTitleText);
+    //создание текста в title карточки done trello
+    const trelloCardDoneTitleText = document.createElement('h3');
+    trelloCardDoneTitleText.classList.add('trello-card-done-title-text');
+    trelloCardDoneTitleText.innerText = 'Title: ' + title;
+    trelloCardDoneWrapTitle.appendChild(trelloCardDoneTitleText);
 
-//создание родителя для кнопки в title
-const trelloCardDoneWrapButtons = document.createElement('div');
-trelloCardDoneWrapButtons.classList.add('trello-card-done-wrap-buttons');
-trelloCardDoneWrapTitle.appendChild(trelloCardDoneWrapButtons);
+    //создание родителя для кнопки в title
+    const trelloCardDoneWrapButtons = document.createElement('div');
+    trelloCardDoneWrapButtons.classList.add('trello-card-done-wrap-buttons');
+    trelloCardDoneWrapTitle.appendChild(trelloCardDoneWrapButtons);
 
-//создание кнопки delete
-const trelloCardDoneButtonDelete = document.createElement('button');
-trelloCardDoneButtonDelete.classList.add('trello-card-done-button-delete');
-trelloCardDoneButtonDelete.innerText = 'Delete';
-trelloCardDoneWrapButtons.appendChild(trelloCardDoneButtonDelete);
+    //создание кнопки delete
+    const trelloCardDoneButtonDelete = document.createElement('button');
+    trelloCardDoneButtonDelete.classList.add('trello-card-done-button-delete');
+    trelloCardDoneButtonDelete.innerText = 'Delete';
+    trelloCardDoneWrapButtons.appendChild(trelloCardDoneButtonDelete);
 
-//при нажатии на кнопку delete
-trelloCardDoneButtonDelete.addEventListener('click', function() {
-    trelloCardDoneItem.remove();
-    doneCards = doneCards.filter(function (elem) {
-        return elem.id !== id;
+    //при нажатии на кнопку delete
+    trelloCardDoneButtonDelete.addEventListener('click', function () {
+        trelloCardDoneItem.remove();
+        doneCards = doneCards.filter(function (elem) {
+            return elem.id !== id;
+        });
+        trelloCardDoneCounter.innerText = parseInt(trelloCardDoneCounter.innerText) - 1;
+        saveDone();
     });
-    trelloCardDoneCounter.innerText = parseInt(trelloCardDoneCounter.innerText) - 1;
-    saveDone();
-});
 
-//создание родителя для description в done
-const trelloCardDoneWrapDescription = document.createElement('div');
-trelloCardDoneWrapDescription.classList.add('trello-card-done-wrap-description');
-trelloCardDoneItem.appendChild(trelloCardDoneWrapDescription);
+    //создание родителя для description в done
+    const trelloCardDoneWrapDescription = document.createElement('div');
+    trelloCardDoneWrapDescription.classList.add('trello-card-done-wrap-description');
+    trelloCardDoneItem.appendChild(trelloCardDoneWrapDescription);
 
-//создание description в done
-const trelloCardDoneDescription = document.createElement('h3');
-trelloCardDoneDescription.classList.add('trello-card-done-description');
-trelloCardDoneDescription.innerText = 'Description: ' + desc;
-trelloCardDoneWrapDescription.appendChild(trelloCardDoneDescription);
+    //создание description в done
+    const trelloCardDoneDescription = document.createElement('h3');
+    trelloCardDoneDescription.classList.add('trello-card-done-description');
+    trelloCardDoneDescription.innerText = 'Description: ' + desc;
+    trelloCardDoneWrapDescription.appendChild(trelloCardDoneDescription);
 
-//создание родителя для описания пользователя и времени добавления карточки done
-const trelloCardDoneWrapUserInfo = document.createElement('div');
-trelloCardDoneWrapUserInfo.classList.add('trello-card-done-wrap-user-info');
-trelloCardDoneItem.appendChild(trelloCardDoneWrapUserInfo);
+    //создание родителя для описания пользователя и времени добавления карточки done
+    const trelloCardDoneWrapUserInfo = document.createElement('div');
+    trelloCardDoneWrapUserInfo.classList.add('trello-card-done-wrap-user-info');
+    trelloCardDoneItem.appendChild(trelloCardDoneWrapUserInfo);
 
-//создание текста в описании пользователя и времени добавления карточки
-const trelloCardDoneUserInfoText = document.createElement('h3');
-trelloCardDoneUserInfoText.classList.add('trello-card-done-user-info-text');
-trelloCardDoneUserInfoText.innerText = 'User: ' + user;
-trelloCardDoneWrapUserInfo.appendChild(trelloCardDoneUserInfoText);
+    //создание текста в описании пользователя и времени добавления карточки
+    const trelloCardDoneUserInfoText = document.createElement('h3');
+    trelloCardDoneUserInfoText.classList.add('trello-card-done-user-info-text');
+    trelloCardDoneUserInfoText.innerText = 'User: ' + user;
+    trelloCardDoneWrapUserInfo.appendChild(trelloCardDoneUserInfoText);
 
-//создание текста времени добавления карточки
-const trelloCardDoneUserInfoTime = document.createElement('h3');
-trelloCardDoneUserInfoTime.classList.add('trello-card-done-user-info-time');
-trelloCardDoneUserInfoTime.innerText = new Date().toLocaleString().slice(11,-3);
-trelloCardDoneWrapUserInfo.appendChild(trelloCardDoneUserInfoTime);
+    //создание текста времени добавления карточки
+    const trelloCardDoneUserInfoTime = document.createElement('h3');
+    trelloCardDoneUserInfoTime.classList.add('trello-card-done-user-info-time');
+    trelloCardDoneUserInfoTime.innerText = new Date().toLocaleString().slice(11, -3);
+    time = trelloCardDoneUserInfoTime.innerText;
+    trelloCardDoneWrapUserInfo.appendChild(trelloCardDoneUserInfoTime);
 
 }
 
@@ -718,7 +838,7 @@ function createModalDone() {
     const saveButtonDone = document.createElement('button');
     saveButtonDone.classList.add('save-button-done');
     saveButtonDone.innerText = 'Confirm';
-    saveButtonDone.addEventListener('click', function() {
+    saveButtonDone.addEventListener('click', function () {
         trelloCardDoneBody.innerHTML = '';
         doneCards = [];
         trelloCardDoneCounter.innerText = '0';
@@ -730,7 +850,7 @@ function createModalDone() {
     const cancelButtonDone = document.createElement('button');
     cancelButtonDone.classList.add('cancel-button-done');
     cancelButtonDone.innerText = 'Cancel';
-    cancelButtonDone.addEventListener('click', function() {
+    cancelButtonDone.addEventListener('click', function () {
         modalDone.style.display = 'none';
     });
     modalContentDone.appendChild(cancelButtonDone);
@@ -742,16 +862,11 @@ function createModalDone() {
     return createModalDone;
 };
 
-// Вызываем функцию createModalDone для создания модального окна
-createModalDone();
-
 // При нажатии на кнопку delete all удалить карточки done
-trelloDeleteAllButton.addEventListener('click', function() {
-    // Модальное окно с подтверждением удаления
-    const modalDone2 = document.querySelector('.modal-done');
-    if (modalDone2) {
-        modalDone2.style.display = 'block';
-    }
+trelloDeleteAllButton.addEventListener('click', function () {
+    createModalDone();
+    const modalDone = document.querySelector('.modal-done');
+    modalDone.style.display = 'block';
 });
 
 
@@ -762,26 +877,29 @@ trelloDeleteAllButton.addEventListener('click', function() {
 function getNamesTodo() {
     const storedTodos = JSON.parse(localStorage.getItem('todoCards')) || [];
 
-    storedTodos.forEach(todo => {;
-        createToDoTrello(todo.title, todo.desc, todo.id, todo.user);
+    storedTodos.forEach(todo => {
+        ;
+        createToDoTrello(todo.title, todo.desc, todo.id, todo.user, todo.time);
     }); updateCounters()
-    
+
 }
 
 function getNamesInProgress() {
     const storedTodos = JSON.parse(localStorage.getItem('inProgressCards')) || [];
 
-    storedTodos.forEach(todo => {;
-        createInProgress(todo.title, todo.desc, todo.id, todo.user);
+    storedTodos.forEach(todo => {
+        ;
+        createInProgress(todo.title, todo.desc, todo.id, todo.user, todo.time);
     });
     trelloCardInProgressCounter.innerText = inProgressCards.length;
-    
+
 }
 
 function getNamesDone() {
     const storedTodos = JSON.parse(localStorage.getItem('doneCards')) || [];
-    storedTodos.forEach(todo => {;
-        createDone(todo.title, todo.desc, todo.id, todo.user);
+    storedTodos.forEach(todo => {
+        ;
+        createDone(todo.title, todo.desc, todo.id, todo.user, todo.time);
     });
     trelloCardDoneCounter.innerText = doneCards.length;
 }
@@ -799,12 +917,11 @@ function saveInProgress() {
 // Сохранение карточек из раздела "DONE" в localStorage
 function saveDone() {
     localStorage.setItem('doneCards', JSON.stringify(doneCards));
-    //обновление счётчика
-    
+
 }
 
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     getNamesTodo(); getNamesInProgress(); getNamesDone();
 
 });
