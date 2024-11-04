@@ -77,7 +77,6 @@ function updateCounters() {
 }
 
 let todoCards = [];
-const currentTime = new Date().toLocaleString().slice(11, -3);
 
 // Функция для генерации уникального идентификатора
 function generateId() {
@@ -101,28 +100,16 @@ function createToDoTrello(title, desc, id, user, time) {
     trelloCardTodoItem.setAttribute('id', todo.id);
     trelloCardTodoBody.appendChild(trelloCardTodoItem);
 
-    //создание родителя title в карточке todo trello
-    const trelloCardTodoWrapTitle = document.createElement('div');
-    trelloCardTodoWrapTitle.classList.add('trello-card-todo-wrap-title');
-    trelloCardTodoItem.appendChild(trelloCardTodoWrapTitle);
-
-    //создание текста в title карточки todo trello
-    const trelloCardTodoTitleText = document.createElement('h3');
-    trelloCardTodoTitleText.classList.add('trello-card-todo-title-text');
-    trelloCardTodoTitleText.textContent = 'Title: ' + title;
-    trelloCardTodoWrapTitle.appendChild(trelloCardTodoTitleText);
-
     //создание родителя для кнопок в title
     const trelloCardTodoWrapButtons = document.createElement('div');
     trelloCardTodoWrapButtons.classList.add('trello-card-todo-wrap-buttons');
-    trelloCardTodoWrapTitle.appendChild(trelloCardTodoWrapButtons);
+    trelloCardTodoItem.appendChild(trelloCardTodoWrapButtons);
 
     //создание кнопки edit
     const trelloCardTodoButtonEdit = document.createElement('button');
     trelloCardTodoButtonEdit.classList.add('trello-card-todo-button-edit');
     trelloCardTodoButtonEdit.innerText = 'Edit';
     trelloCardTodoWrapButtons.appendChild(trelloCardTodoButtonEdit);
-
 
     function createEditModal() {
 
@@ -251,19 +238,11 @@ function createToDoTrello(title, desc, id, user, time) {
             const newId = todo.id; // Использую текущий идентификатор
             const newTime = todo.time; // Использую текущую дату
 
-
-            // Обновление данных карточки
-            title = newTitle;
-            desc = newDesc;
-            user = newUser;
-            id = newId; // Обновление идентификатора
-            time = newTime; // Обновление даты
-
             // Обновление текста на карточке
-            trelloCardTodoTitleText.textContent = 'Title: ' + newTitle;
-            trelloCardTodoDescription.textContent = 'Description: ' + newDesc;
-            trelloCardTodoUserInfoText.textContent = 'User: ' + newUser;
-            trelloCardTodoUserInfoTime.textContent = newTime;
+            trelloCardTodoTitleText.innerHTML = '<span>Title: </span>' + newTitle;
+            trelloCardTodoDescription.innerHTML = '<span>Description: </span>' + newDesc;
+            trelloCardTodoUserInfoText.innerHTML = '<span>User: </span>' + newUser;
+            trelloCardTodoUserInfoTime.innerHTML = newTime;
 
             saveToDo();
             updateCounters(); //обновить счётчик после удаления
@@ -271,7 +250,6 @@ function createToDoTrello(title, desc, id, user, time) {
             editTitleInput.style.display = 'none';
         });
     });
-
 
     //создание кнопки delete
     const trelloCardTodoButtonDelete = document.createElement('button');
@@ -297,6 +275,17 @@ function createToDoTrello(title, desc, id, user, time) {
     });
 
 
+    //создание родителя title в карточке todo trello
+    const trelloCardTodoWrapTitle = document.createElement('div');
+    trelloCardTodoWrapTitle.classList.add('trello-card-todo-wrap-title');
+    trelloCardTodoItem.appendChild(trelloCardTodoWrapTitle);
+
+    //создание текста в title карточки todo trello
+    const trelloCardTodoTitleText = document.createElement('h3');
+    trelloCardTodoTitleText.classList.add('trello-card-todo-title-text');
+    trelloCardTodoTitleText.innerHTML = '<span>Title: </span>' + title.replace(' ', '<br>'); //перенос текста в новую строку
+    trelloCardTodoWrapTitle.appendChild(trelloCardTodoTitleText);
+
 
     //создание родителя для description в todo
     const trelloCardTodoWrapDescription = document.createElement('div');
@@ -307,7 +296,7 @@ function createToDoTrello(title, desc, id, user, time) {
     //создание description в todo
     const trelloCardTodoDescription = document.createElement('h3');
     trelloCardTodoDescription.classList.add('trello-card-todo-description');
-    trelloCardTodoDescription.textContent = 'Description: ' + desc;
+    trelloCardTodoDescription.innerHTML = '<span>Description: </span>' + desc;
     trelloCardTodoWrapDescription.appendChild(trelloCardTodoDescription);
 
     //создание кнопки '>'
@@ -415,7 +404,7 @@ function createToDoTrello(title, desc, id, user, time) {
     //создание текста в описании пользователя и времени добавления карточки
     const trelloCardTodoUserInfoText = document.createElement('h3');
     trelloCardTodoUserInfoText.classList.add('trello-card-todo-user-info-text');
-    trelloCardTodoUserInfoText.innerText = 'User: ' + user;
+    trelloCardTodoUserInfoText.innerHTML = '<span>User: </span>' + user;
     trelloCardTodoWrapUserInfo.appendChild(trelloCardTodoUserInfoText);
 
     //создание текста времени добавления карточки
@@ -459,9 +448,6 @@ function createModal() {
     const select1 = document.createElement('select');
     select1.classList.add('select-css');
     select1.setAttribute('id', selectId);
-    //option
-
-    // select1.innerHTML = '<option value="Mandryk Yuliya">Mandryk Yuliya</option> <option value="Ivanov Ivan">Ivanov Ivan</option> <option value="Selezneva Yana">Selezneva Yana</option> <option value="Kozlova Elena">Kozlova Elena</option> <option value="Kotova Sveta">Kotova Sveta</option>';
     modalContent.appendChild(select1);
 
     function fetchUsers() {
@@ -578,22 +564,10 @@ function createInProgress(title, desc, id, user, time) {
     trelloCardInProgressItem.classList.add('trello-card-in-progress-item');
     trelloCardInProgressBody.appendChild(trelloCardInProgressItem);
 
-    //создание родителя title в карточке in progress trello
-    const trelloCardInProgressWrapTitle = document.createElement('div');
-    trelloCardInProgressWrapTitle.classList.add('trello-card-in-progress-wrap-title');
-    trelloCardInProgressItem.appendChild(trelloCardInProgressWrapTitle);
-
-    //создание текста в title карточки in progress trello
-    const trelloCardInProgressTitleText = document.createElement('h3');
-    trelloCardInProgressTitleText.classList.add('trello-card-in-progress-title-text');
-    const trelloTitle = document.querySelector('.trello-card-todo-title-text')
-    trelloCardInProgressTitleText.innerText = 'Title: ' + title;
-    trelloCardInProgressWrapTitle.appendChild(trelloCardInProgressTitleText);
-
     //создание родителя для кнопок в title
     const trelloCardInProgressWrapButtons = document.createElement('div');
     trelloCardInProgressWrapButtons.classList.add('trello-card-in-progress-wrap-buttons');
-    trelloCardInProgressWrapTitle.appendChild(trelloCardInProgressWrapButtons);
+    trelloCardInProgressItem.appendChild(trelloCardInProgressWrapButtons);
 
     //создание кнопки back
     const trelloCardInProgressButtonBack = document.createElement('button');
@@ -658,6 +632,17 @@ function createInProgress(title, desc, id, user, time) {
         saveInProgress();
     })
 
+    //создание родителя title в карточке in progress trello
+    const trelloCardInProgressWrapTitle = document.createElement('div');
+    trelloCardInProgressWrapTitle.classList.add('trello-card-in-progress-wrap-title');
+    trelloCardInProgressItem.appendChild(trelloCardInProgressWrapTitle);
+
+    //создание текста в title карточки in progress trello
+    const trelloCardInProgressTitleText = document.createElement('h3');
+    trelloCardInProgressTitleText.classList.add('trello-card-in-progress-title-text');
+    trelloCardInProgressTitleText.innerHTML = '<span>Title: </span>' + title;
+    trelloCardInProgressWrapTitle.appendChild(trelloCardInProgressTitleText);
+
     //создание родителя для description в in progress
     const trelloCardInProgressWrapDescription = document.createElement('div');
     trelloCardInProgressWrapDescription.classList.add('trello-card-in-progress-wrap-description');
@@ -666,7 +651,7 @@ function createInProgress(title, desc, id, user, time) {
     //создание description в in progress
     const trelloCardInProgressDescription = document.createElement('h3');
     trelloCardInProgressDescription.classList.add('trello-card-in-progress-description');
-    trelloCardInProgressDescription.innerText = 'Description: ' + desc;
+    trelloCardInProgressDescription.innerHTML = '<span>Description: </span>' + desc;
     trelloCardInProgressWrapDescription.appendChild(trelloCardInProgressDescription);
 
     //создание родителя для описания пользователя и времени добавления карточки in progress
@@ -677,7 +662,7 @@ function createInProgress(title, desc, id, user, time) {
     //создание текста в описании пользователя и времени добавления карточки
     const trelloCardInProgressUserInfoText = document.createElement('h3');
     trelloCardInProgressUserInfoText.classList.add('trello-card-inProgress-user-info-text');
-    trelloCardInProgressUserInfoText.innerText = 'User: ' + user;
+    trelloCardInProgressUserInfoText.innerHTML = '<span>User: </span>' + user;
     trelloCardInProgressWrapUserInfo.appendChild(trelloCardInProgressUserInfoText);
 
     //создание текста времени добавления карточки
@@ -711,7 +696,7 @@ trelloCardDone.appendChild(trelloCardDoneHead);
 
 //создание текста в шапке карточки done trello
 const trelloCardDoneHeadText = document.createElement('h2');
-trelloCardDoneHeadText.classList.add('trello-card-in-progress-head-text');
+trelloCardDoneHeadText.classList.add('trello-card-done-head-text');
 trelloCardDoneHeadText.innerText = 'DONE:';
 trelloCardDoneHead.appendChild(trelloCardDoneHeadText);
 
@@ -749,21 +734,10 @@ function createDone(title, desc, id, user, time) {
     trelloCardDoneItem.classList.add('trello-card-done-item');
     trelloCardDoneBody.appendChild(trelloCardDoneItem);
 
-    //создание родителя title в карточке done trello
-    const trelloCardDoneWrapTitle = document.createElement('div');
-    trelloCardDoneWrapTitle.classList.add('trello-card-done-wrap-title');
-    trelloCardDoneItem.appendChild(trelloCardDoneWrapTitle);
-
-    //создание текста в title карточки done trello
-    const trelloCardDoneTitleText = document.createElement('h3');
-    trelloCardDoneTitleText.classList.add('trello-card-done-title-text');
-    trelloCardDoneTitleText.innerText = 'Title: ' + title;
-    trelloCardDoneWrapTitle.appendChild(trelloCardDoneTitleText);
-
     //создание родителя для кнопки в title
     const trelloCardDoneWrapButtons = document.createElement('div');
     trelloCardDoneWrapButtons.classList.add('trello-card-done-wrap-buttons');
-    trelloCardDoneWrapTitle.appendChild(trelloCardDoneWrapButtons);
+    trelloCardDoneItem.appendChild(trelloCardDoneWrapButtons);
 
     //создание кнопки delete
     const trelloCardDoneButtonDelete = document.createElement('button');
@@ -781,6 +755,17 @@ function createDone(title, desc, id, user, time) {
         saveDone();
     });
 
+    //создание родителя title в карточке done trello
+    const trelloCardDoneWrapTitle = document.createElement('div');
+    trelloCardDoneWrapTitle.classList.add('trello-card-done-wrap-title');
+    trelloCardDoneItem.appendChild(trelloCardDoneWrapTitle);
+
+    //создание текста в title карточки done trello
+    const trelloCardDoneTitleText = document.createElement('h3');
+    trelloCardDoneTitleText.classList.add('trello-card-done-title-text');
+    trelloCardDoneTitleText.innerHTML = '<span>Title: </span>' + title;
+    trelloCardDoneWrapTitle.appendChild(trelloCardDoneTitleText);
+
     //создание родителя для description в done
     const trelloCardDoneWrapDescription = document.createElement('div');
     trelloCardDoneWrapDescription.classList.add('trello-card-done-wrap-description');
@@ -789,7 +774,7 @@ function createDone(title, desc, id, user, time) {
     //создание description в done
     const trelloCardDoneDescription = document.createElement('h3');
     trelloCardDoneDescription.classList.add('trello-card-done-description');
-    trelloCardDoneDescription.innerText = 'Description: ' + desc;
+    trelloCardDoneDescription.innerHTML = '<span>Description: </span>' + desc;
     trelloCardDoneWrapDescription.appendChild(trelloCardDoneDescription);
 
     //создание родителя для описания пользователя и времени добавления карточки done
@@ -800,7 +785,7 @@ function createDone(title, desc, id, user, time) {
     //создание текста в описании пользователя и времени добавления карточки
     const trelloCardDoneUserInfoText = document.createElement('h3');
     trelloCardDoneUserInfoText.classList.add('trello-card-done-user-info-text');
-    trelloCardDoneUserInfoText.innerText = 'User: ' + user;
+    trelloCardDoneUserInfoText.innerHTML = '<span>User: </span>' + user;
     trelloCardDoneWrapUserInfo.appendChild(trelloCardDoneUserInfoText);
 
     //создание текста времени добавления карточки
@@ -878,9 +863,9 @@ function getNamesTodo() {
     const storedTodos = JSON.parse(localStorage.getItem('todoCards')) || [];
 
     storedTodos.forEach(todo => {
-        ;
         createToDoTrello(todo.title, todo.desc, todo.id, todo.user, todo.time);
-    }); updateCounters()
+    });
+    updateCounters()
 
 }
 
@@ -888,7 +873,6 @@ function getNamesInProgress() {
     const storedTodos = JSON.parse(localStorage.getItem('inProgressCards')) || [];
 
     storedTodos.forEach(todo => {
-        ;
         createInProgress(todo.title, todo.desc, todo.id, todo.user, todo.time);
     });
     trelloCardInProgressCounter.innerText = inProgressCards.length;
@@ -897,8 +881,8 @@ function getNamesInProgress() {
 
 function getNamesDone() {
     const storedTodos = JSON.parse(localStorage.getItem('doneCards')) || [];
+
     storedTodos.forEach(todo => {
-        ;
         createDone(todo.title, todo.desc, todo.id, todo.user, todo.time);
     });
     trelloCardDoneCounter.innerText = doneCards.length;
@@ -925,4 +909,3 @@ window.addEventListener('load', function () {
     getNamesTodo(); getNamesInProgress(); getNamesDone();
 
 });
-
