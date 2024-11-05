@@ -83,13 +83,13 @@ function generateId() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
 
-function createToDoTrello(title, desc, id, user, time) {
+function createToDoTrello(title, desc, id, user, time = new Date().toLocaleString().slice(11, -3)) {
     const todo = {
         title: title,
         desc: desc,
         id: id || generateId(),
         user: user || 'user',
-        time: time || new Date().toLocaleString().slice(11, -3)
+        time: time,
     };
 
     todoCards.push(todo);
@@ -374,8 +374,10 @@ function createToDoTrello(title, desc, id, user, time) {
             return;
         }
 
+        const time = new Date().toLocaleString().slice(11, -3);
+
         // Создание новой карточки в разделе "IN PROGRESS"
-        createInProgress(todo.title, todo.desc, todo.id, todo.user, todo.time);
+        createInProgress(todo.title, todo.desc, todo.id, todo.user, time);
 
         // Добавление новой карточки в массив inProgressCards
         inProgressCards.push({ title, desc, id, user, time });
@@ -410,8 +412,8 @@ function createToDoTrello(title, desc, id, user, time) {
     //создание текста времени добавления карточки
     const trelloCardTodoUserInfoTime = document.createElement('h3');
     trelloCardTodoUserInfoTime.classList.add('trello-card-todo-user-info-time');
-    trelloCardTodoUserInfoTime.innerText = new Date().toLocaleString().slice(11, -3);
-    time = trelloCardTodoUserInfoTime.innerText;
+    trelloCardTodoUserInfoTime.innerText = time;
+    // time = trelloCardTodoUserInfoTime.innerText;
     trelloCardTodoWrapUserInfo.appendChild(trelloCardTodoUserInfoTime);
 }
 
@@ -479,8 +481,9 @@ function createModal() {
         const desc = descriptionInput.value;
         const user = document.getElementById(selectId).value;
         const id = generateId();
+        const time = new Date().toLocaleString().slice(11, -3);
 
-        createToDoTrello(title, desc, id, user);
+        createToDoTrello(title, desc, id, user, time);
         trelloCardTodoCounter.innerText = parseInt(trelloCardTodoCounter.innerText) + 1;
 
 
@@ -548,7 +551,7 @@ let inProgressCards = [];
 
 
 //создание карточки in progress trello
-function createInProgress(title, desc, id, user, time) {
+function createInProgress(title, desc, id, user, time = new Date().toLocaleString().slice(11, -3)) {
     const todo2 = {
         title: title,
         desc: desc,
@@ -613,7 +616,7 @@ function createInProgress(title, desc, id, user, time) {
         const desc = todo2.desc;
         const id = todo2.id;
         const user = todo2.user;
-        const time = todo2.time;
+        const time = new Date().toLocaleString().slice(11, -3);
 
         // Создание новой карточки в разделе "done"
         createDone(title, desc, id, user, time);
@@ -668,8 +671,8 @@ function createInProgress(title, desc, id, user, time) {
     //создание текста времени добавления карточки
     const trelloCardInProgressUserInfoTime = document.createElement('h3');
     trelloCardInProgressUserInfoTime.classList.add('trello-card-inProgress-user-info-time');
-    trelloCardInProgressUserInfoTime.innerText = new Date().toLocaleString().slice(11, -3);
-    time = trelloCardInProgressUserInfoTime.innerText;
+    trelloCardInProgressUserInfoTime.innerText = time;
+    // time = trelloCardInProgressUserInfoTime.innerText;
     trelloCardInProgressWrapUserInfo.appendChild(trelloCardInProgressUserInfoTime);
     //увеличение счётчика in progress
     trelloCardInProgressCounter.innerText = parseInt(trelloCardInProgressCounter.innerText) + 1;
@@ -716,7 +719,7 @@ trelloCardDone.appendChild(trelloCardDoneBody);
 let doneCards = [];
 
 //создание карточки done trello
-function createDone(title, desc, id, user, time) {
+function createDone(title, desc, id, user, time = new Date().toLocaleString().slice(11, -3)) {
     const todo3 = {
         title: title,
         desc: desc,
@@ -791,8 +794,8 @@ function createDone(title, desc, id, user, time) {
     //создание текста времени добавления карточки
     const trelloCardDoneUserInfoTime = document.createElement('h3');
     trelloCardDoneUserInfoTime.classList.add('trello-card-done-user-info-time');
-    trelloCardDoneUserInfoTime.innerText = new Date().toLocaleString().slice(11, -3);
-    time = trelloCardDoneUserInfoTime.innerText;
+    trelloCardDoneUserInfoTime.innerText = time;
+    // time = trelloCardDoneUserInfoTime.innerText;
     trelloCardDoneWrapUserInfo.appendChild(trelloCardDoneUserInfoTime);
 
 }
