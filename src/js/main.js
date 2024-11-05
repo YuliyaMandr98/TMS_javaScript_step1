@@ -36,16 +36,16 @@ trelloContainer.appendChild(trelloWrapCard);
 //создание карточки todo trello
 //////////////TODO CARD//////////////////////////
 //создание родителя для карточек trello
-const trelloWrapCardToDo = document.createElement('div');
-trelloWrapCardToDo.classList.add('trello-wrap-card-todo');
-trelloWrapCard.appendChild(trelloWrapCardToDo);
+// const trelloWrapCardToDo = document.createElement('div');
+// trelloWrapCardToDo.classList.add('trello-wrap-card-todo');
+// trelloWrapCard.appendChild(trelloWrapCardToDo);
 
 
-//создание карточки todo trello
+//создание колонки todo trello
 const trelloCardTodo = document.createElement('div');
 trelloCardTodo.classList.add('trello-card-todo');
 trelloCardTodo.setAttribute('id', 'todo');
-trelloWrapCardToDo.appendChild(trelloCardTodo);
+trelloWrapCard.appendChild(trelloCardTodo);
 
 //создание шапки карточки todo trello
 const trelloCardTodoHead = document.createElement('div');
@@ -220,8 +220,8 @@ function createToDoTrello(title, desc, id, user, time) {
         const editSelect = modal.querySelector('.select-css');
 
         //присваиваю аргументам функции значения переменных
-        editTitleInput.value = title;
-        editDescriptionInput.value = desc;
+        editTitleInput.value = todo.title;
+        editDescriptionInput.value = todo.desc;
         editSelect.value = user;
 
 
@@ -511,15 +511,15 @@ trelloCardTodoButtonAdd.addEventListener('click', function () {
 ////////////////////////IN PROGRESS////////////////////////////////////
 
 ////создание родителя для карточек in progress
-const trelloWrapCardInProgress = document.createElement('div');
-trelloWrapCardInProgress.classList.add('trello-wrap-card-in-progress');
-trelloWrapCard.appendChild(trelloWrapCardInProgress);
+// const trelloWrapCardInProgress = document.createElement('div');
+// trelloWrapCardInProgress.classList.add('trello-wrap-card-in-progress');
+// trelloWrapCard.appendChild(trelloWrapCardInProgress);
 
 //создание карточки in progress trello
 const trelloCardInProgress = document.createElement('div');
 trelloCardInProgress.classList.add('trello-card-in-progress');
 trelloCardInProgress.setAttribute('id', 'progress');
-trelloWrapCardInProgress.appendChild(trelloCardInProgress);
+trelloWrapCard.appendChild(trelloCardInProgress);
 
 //создание шапки карточки in progress trello
 const trelloCardInProgressHead = document.createElement('div');
@@ -679,15 +679,15 @@ function createInProgress(title, desc, id, user, time) {
 ////////////////////////////DONE/////////////////////////
 
 //создание родителя для карточек done
-const trelloWrapCardDone = document.createElement('div');
-trelloWrapCardDone.classList.add('trello-wrap-card-done');
-trelloWrapCard.appendChild(trelloWrapCardDone);
+// const trelloWrapCardDone = document.createElement('div');
+// trelloWrapCardDone.classList.add('trello-wrap-card-done');
+// trelloWrapCard.appendChild(trelloWrapCardDone);
 
 //создание карточки done trello
 const trelloCardDone = document.createElement('div');
 trelloCardDone.classList.add('trello-card-done');
 trelloCardDone.setAttribute('id', 'done');
-trelloWrapCardDone.appendChild(trelloCardDone);
+trelloWrapCard.appendChild(trelloCardDone);
 
 //создание шапки карточки done trello
 const trelloCardDoneHead = document.createElement('div');

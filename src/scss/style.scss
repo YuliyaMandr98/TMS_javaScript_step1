@@ -8,12 +8,17 @@ span {
 body {
     background-color: #fbf9fc;
 
+    .trello-container {
+        max-width: 1170px;
+        margin: auto;
+    }
+
     .header-wrap-trello {
         border: 1px solid rgb(233, 158, 248);
         border-radius: 15px;
         padding: 10px 30px;
         background-color: #ecd1f8;
-        width: 80%;
+        width: 90%;
         display: block;
         margin: 0 auto 20px;
 
@@ -35,365 +40,363 @@ body {
     .trello-wrap-card {
         display: flex;
         justify-content: space-evenly;
+        align-items: start;
 
-        .trello-wrap-card-todo {
-            padding: 20px 50px;
+        // .trello-wrap-card-todo {
+        //     padding: 20px 50px;
 
-            .trello-card-todo {
-                width: 290px;
+        .trello-card-todo {
+            width: 28%;
+            border: 1px solid #9dc8a8;
+            border-radius: 15px;
+
+            .trello-card-todo-head {
+                display: flex;
+                justify-content: space-around;
                 border: 1px solid #9dc8a8;
                 border-radius: 15px;
+                margin-bottom: 15px;
+                background-color: #d5f8df;
 
-                .trello-card-todo-head {
-                    display: flex;
-                    justify-content: space-around;
-                    border: 1px solid #9dc8a8;
-                    border-radius: 15px;
-                    margin-bottom: 15px;
-                    background-color: #d5f8df;
-
-                    .trello-card-todo-head-text {
-                        font-size: 18px;
-                        align-self: center;
-                    }
-                }
-
-                .trello-card-todo-body {
-                    padding: 10px 20px;
-                    margin-bottom: 20px;
-
-                    .trello-card-todo-item {
-                        border: 1px solid #9dc8a8;
-                        border-radius: 15px;
-                        background-color: #d5f8df;
-                        margin-bottom: 10px;
-                        padding-top: 20px;
-                        padding-right: 10px;
-
-                        .trello-card-todo-wrap-title {
-                            padding: 0 10px;
-                            margin-bottom: 10px;
-                            overflow: hidden;
-
-
-                            .trello-card-todo-title-text {
-                                max-width: 90%;
-                                overflow-wrap: anywhere;
-                                font-weight: 400;
-                                font-size: 18px;
-                            }
-                        }
-
-                        .trello-card-todo-wrap-buttons {
-                            display: flex;
-                            justify-content: right;
-
-                            .trello-card-todo-button-edit {
-                                margin-right: 10px;
-                                background-color: #b6f9c9;
-                                width: 46px;
-                                height: 22px;
-                                border: 1px solid #9dc8a8;
-                                cursor: pointer;
-                                border-radius: 2px;
-
-                            }
-
-                            .trello-card-todo-button-delete {
-                                background-color: #b6f9c9;
-                                width: 52px;
-                                height: 22px;
-                                border: 1px solid #9dc8a8;
-                                cursor: pointer;
-                                border-radius: 2px;
-                            }
-                        }
-
-
-
-                        .trello-card-todo-wrap-description {
-                            display: flex;
-                            justify-content: space-between;
-                            padding: 0 10px;
-                            margin-bottom: 10px;
-
-                            .trello-card-todo-button-more {
-                                background-color: #b6f9c9;
-                                width: 22px;
-                                height: 80px;
-                                border: 1px solid #9dc8a8;
-                                cursor: pointer;
-                                border-radius: 2px;
-                            }
-
-                            .trello-card-todo-description {
-                                max-width: 190px;
-                                overflow-wrap: anywhere;
-                                font-weight: 400;
-                                font-size: 18px;
-                            }
-
-                            .trello-card-todo-button-more {
-                                height: 80px;
-                                align-self: center;
-                            }
-                        }
-
-                        .trello-card-todo-wrap-user-info {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            padding: 0 10px;
-
-                            .trello-card-todo-user-info-text {
-                                font-weight: 400;
-                                font-size: 18px;
-                            }
-
-                            .trello-card-todo-user-info-time {
-                                font-size: 18px;
-                            }
-
-                        }
-                    }
-                }
-
-                .trello-card-todo-button-add {
-                    background-color: #d5f8df;
-                    width: 290px;
-                    height: 60px;
-                    border: 1px solid #c3e4cc;
-                    cursor: pointer;
-                    display: block;
-                    border-radius: 15px;
+                .trello-card-todo-head-text {
+                    font-size: 18px;
+                    align-self: center;
                 }
             }
-        }
 
+            .trello-card-todo-body {
+                padding: 10px 20px;
+                margin-bottom: 20px;
+
+                .trello-card-todo-item {
+                    border: 1px solid #9dc8a8;
+                    border-radius: 15px;
+                    background-color: #d5f8df;
+                    margin-bottom: 10px;
+                    padding-top: 20px;
+                    padding-right: 10px;
+
+                    .trello-card-todo-wrap-title {
+                        padding: 0 10px;
+                        margin-bottom: 10px;
+                        overflow: hidden;
+
+
+                        .trello-card-todo-title-text {
+                            max-width: 90%;
+                            overflow-wrap: anywhere;
+                            font-weight: 400;
+                            font-size: 18px;
+                        }
+                    }
+
+                    .trello-card-todo-wrap-buttons {
+                        display: flex;
+                        justify-content: right;
+
+                        .trello-card-todo-button-edit {
+                            margin-right: 10px;
+                            background-color: #b6f9c9;
+                            width: 46px;
+                            height: 22px;
+                            border: 1px solid #9dc8a8;
+                            cursor: pointer;
+                            border-radius: 2px;
+
+                        }
+
+                        .trello-card-todo-button-delete {
+                            background-color: #b6f9c9;
+                            width: 52px;
+                            height: 22px;
+                            border: 1px solid #9dc8a8;
+                            cursor: pointer;
+                            border-radius: 2px;
+                        }
+                    }
+
+
+
+                    .trello-card-todo-wrap-description {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0 10px;
+                        margin-bottom: 10px;
+
+                        .trello-card-todo-button-more {
+                            background-color: #b6f9c9;
+                            width: 22px;
+                            height: 60px;
+                            border: 1px solid #9dc8a8;
+                            cursor: pointer;
+                            border-radius: 2px;
+                            align-self: center;
+                        }
+
+                        .trello-card-todo-description {
+                            max-width: 190px;
+                            overflow-wrap: anywhere;
+                            font-weight: 400;
+                            font-size: 18px;
+                        }
+                    }
+
+                    .trello-card-todo-wrap-user-info {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0 10px;
+
+                        .trello-card-todo-user-info-text {
+                            font-weight: 400;
+                            font-size: 18px;
+                        }
+
+                        .trello-card-todo-user-info-time {
+                            font-size: 18px;
+                        }
+
+                    }
+                }
+            }
+
+            .trello-card-todo-button-add {
+                background-color: #d5f8df;
+                width: 100%;
+                height: 60px;
+                border: 1px solid #c3e4cc;
+                cursor: pointer;
+                display: block;
+                border-radius: 15px;
+            }
+        }
     }
 
 }
+
+
 
 
 
 //inProgress
-.trello-wrap-card-in-progress {
-    padding: 20px 50px;
+// .trello-wrap-card-in-progress {
+//     padding: 20px 50px;
 
 
-    .trello-card-in-progress {
-        width: 290px;
+.trello-card-in-progress {
+
+    width: 28%;
+    border: 1px solid rgb(196, 193, 193);
+    border-radius: 15px;
+
+    .trello-card-in-progress-head {
+        display: flex;
+        justify-content: space-around;
         border: 1px solid rgb(196, 193, 193);
         border-radius: 15px;
+        margin-bottom: 15px;
+        background-color: #eaeef0;
 
-        .trello-card-in-progress-head {
-            display: flex;
-            justify-content: space-around;
+        .trello-card-in-progress-head-text {
+            font-size: 18px;
+            align-self: center;
+        }
+    }
+
+    .trello-card-in-progress-body {
+        padding: 10px 20px;
+
+        .trello-card-in-progress-item {
             border: 1px solid rgb(196, 193, 193);
             border-radius: 15px;
-            margin-bottom: 15px;
             background-color: #eaeef0;
+            margin-bottom: 10px;
+            padding-top: 20px;
+            padding-right: 10px;
 
-            .trello-card-in-progress-head-text {
-                font-size: 18px;
-                align-self: center;
+            .trello-card-in-progress-wrap-buttons {
+                display: flex;
+                justify-content: right;
+
+                .trello-card-in-progress-button-back {
+                    background-color: rgb(221, 212, 212);
+                    width: 46px;
+                    height: 22px;
+                    border: 1px solid rgb(196, 193, 193);
+                    cursor: pointer;
+                    border-radius: 2px;
+                    margin-right: 10px;
+                }
+
+                .trello-card-in-progress-button-complete {
+                    background-color: rgb(221, 212, 212);
+                    width: 72px;
+                    height: 22px;
+                    border: 1px solid rgb(196, 193, 193);
+                    cursor: pointer;
+                    border-radius: 2px;
+                }
             }
-        }
 
-        .trello-card-in-progress-body {
-            padding: 10px 20px;
-
-            .trello-card-in-progress-item {
-                border: 1px solid rgb(196, 193, 193);
-                border-radius: 15px;
-                background-color: #eaeef0;
+            .trello-card-in-progress-wrap-title {
+                padding: 0 10px;
                 margin-bottom: 10px;
-                padding-top: 20px;
-                padding-right: 10px;
+                overflow: hidden;
 
-                .trello-card-in-progress-wrap-buttons {
-                    display: flex;
-                    justify-content: right;
-
-                    .trello-card-in-progress-button-back {
-                        background-color: rgb(221, 212, 212);
-                        width: 46px;
-                        height: 22px;
-                        border: 1px solid rgb(196, 193, 193);
-                        cursor: pointer;
-                        border-radius: 2px;
-                        margin-right: 10px;
-                    }
-
-                    .trello-card-in-progress-button-complete {
-                        background-color: rgb(221, 212, 212);
-                        width: 72px;
-                        height: 22px;
-                        border: 1px solid rgb(196, 193, 193);
-                        cursor: pointer;
-                        border-radius: 2px;
-                    }
-                }
-
-                .trello-card-in-progress-wrap-title {
-                    padding: 0 10px;
-                    margin-bottom: 10px;
-                    overflow: hidden;
-
-                    .trello-card-in-progress-title-text {
-                        max-width: 90%;
-                        overflow-wrap: anywhere;
-                        font-weight: 400;
-                        font-size: 18px;
-                    }
-
-
-                }
-
-                .trello-card-in-progress-wrap-description {
-                    display: flex;
-                    justify-content: space-between;
-                    padding: 0 10px;
-                    margin-bottom: 10px;
-
-                    .trello-card-in-progress-description {
-                        max-width: 200px;
-                        overflow-wrap: anywhere;
-                        font-weight: 400;
-                        font-size: 18px;
-                    }
+                .trello-card-in-progress-title-text {
+                    max-width: 90%;
+                    overflow-wrap: anywhere;
+                    font-weight: 400;
+                    font-size: 18px;
                 }
 
 
-                .trello-card-inProgress-wrap-user-info {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 0 10px;
+            }
 
-                    .trello-card-inProgress-user-info-text {
-                        font-weight: 400;
-                        font-size: 18px;
-                    }
+            .trello-card-in-progress-wrap-description {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 10px;
+                margin-bottom: 10px;
 
-                    .trello-card-in-progress-user-info-time {
-                        font-size: 18px;
+                .trello-card-in-progress-description {
+                    max-width: 200px;
+                    overflow-wrap: anywhere;
+                    font-weight: 400;
+                    font-size: 18px;
+                }
+            }
 
-                    }
+
+            .trello-card-inProgress-wrap-user-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10px;
+
+                .trello-card-inProgress-user-info-text {
+                    font-weight: 400;
+                    font-size: 18px;
+                }
+
+                .trello-card-in-progress-user-info-time {
+                    font-size: 18px;
+
                 }
             }
         }
     }
 }
+
 
 
 
 //done
-.trello-wrap-card-done {
-    padding: 20px 50px;
+// .trello-wrap-card-done {
+//     padding: 20px 50px;
 
-    .trello-card-done {
-        width: 290px;
+.trello-card-done {
+    width: 28%;
+    border: 1px solid #93c6e0;
+    border-radius: 15px;
+
+    .trello-card-done-head {
+        display: flex;
+        justify-content: space-around;
         border: 1px solid #93c6e0;
         border-radius: 15px;
+        margin-bottom: 15px;
+        background-color: #b0dff7;
 
-        .trello-card-done-head {
-            display: flex;
-            justify-content: space-around;
-            border: 1px solid #93c6e0;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            background-color: #b0dff7;
-
-            .trello-card-done-head-text {
-                font-size: 18px;
-                align-self: center;
-            }
-        }
-
-        .trello-card-done-body {
-            padding: 10px 20px;
-            margin-bottom: 20px;
-
-            .trello-card-done-item {
-                border: 1px solid #93c6e0;
-                border-radius: 15px;
-                background-color: #bedff1;
-                margin-bottom: 10px;
-                padding-top: 20px;
-                padding-right: 10px;
-
-                .trello-card-done-wrap-buttons {
-                    display: flex;
-                    justify-content: right;
-
-                    .trello-card-done-button-delete {
-                        background-color: #d2e8f3;
-                        width: 53px;
-                        height: 22px;
-                        border: 1px solid #93c6e0;
-                        cursor: pointer;
-                        border-radius: 2px;
-                    }
-                }
-
-                .trello-card-done-wrap-title {
-                    padding: 0 10px;
-                    margin-bottom: 10px;
-                    overflow: hidden;
-
-                    .trello-card-done-title-text {
-                        max-width: 90%;
-                        overflow-wrap: anywhere;
-                        font-weight: 400;
-                        font-size: 18px;
-                    }
-
-                }
-
-                .trello-card-done-wrap-description {
-                    display: flex;
-                    justify-content: space-between;
-                    padding: 0 10px;
-                    margin-bottom: 10px;
-
-                    .trello-card-done-description {
-                        max-width: 90%;
-                        overflow-wrap: anywhere;
-                        font-weight: 400;
-                        font-size: 18px;
-                    }
-                }
-
-                .trello-card-done-wrap-user-info {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 0 10px;
-
-                    .trello-card-done-user-info-text {
-                        font-weight: 400;
-                        font-size: 18px;
-                    }
-
-                    .trello-card-done-user-info-time {
-                        font-size: 18px;
-                    }
-                }
-            }
-        }
-
-        .trello-delete-all-button {
-            background-color: #b0dff7;
-            width: 290px;
-            height: 60px;
-            border: 1px solid #f5c6cb;
-            cursor: pointer;
-            display: block;
-            border-radius: 15px;
+        .trello-card-done-head-text {
+            font-size: 18px;
+            align-self: center;
         }
     }
+
+    .trello-card-done-body {
+        padding: 10px 20px;
+        margin-bottom: 20px;
+
+        .trello-card-done-item {
+            border: 1px solid #93c6e0;
+            border-radius: 15px;
+            background-color: #bedff1;
+            margin-bottom: 10px;
+            padding-top: 20px;
+            padding-right: 10px;
+
+            .trello-card-done-wrap-buttons {
+                display: flex;
+                justify-content: right;
+
+                .trello-card-done-button-delete {
+                    background-color: #d2e8f3;
+                    width: 53px;
+                    height: 22px;
+                    border: 1px solid #93c6e0;
+                    cursor: pointer;
+                    border-radius: 2px;
+                }
+            }
+
+            .trello-card-done-wrap-title {
+                padding: 0 10px;
+                margin-bottom: 10px;
+                overflow: hidden;
+
+                .trello-card-done-title-text {
+                    max-width: 90%;
+                    overflow-wrap: anywhere;
+                    font-weight: 400;
+                    font-size: 18px;
+                }
+
+            }
+
+            .trello-card-done-wrap-description {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 10px;
+                margin-bottom: 10px;
+
+                .trello-card-done-description {
+                    max-width: 90%;
+                    overflow-wrap: anywhere;
+                    font-weight: 400;
+                    font-size: 18px;
+                }
+            }
+
+            .trello-card-done-wrap-user-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10px;
+
+                .trello-card-done-user-info-text {
+                    font-weight: 400;
+                    font-size: 18px;
+                }
+
+                .trello-card-done-user-info-time {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+
+    .trello-delete-all-button {
+        background-color: #b0dff7;
+        width: 100%;
+        height: 60px;
+        border: 1px solid #f5c6cb;
+        cursor: pointer;
+        display: block;
+        border-radius: 15px;
+    }
 }
+
 
 
 
