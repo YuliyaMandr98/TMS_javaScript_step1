@@ -1,5 +1,395 @@
-// @media (max-width: 1421px) {
-//     body .trello-wrap-card {
-//         justify-content: center;
-//     }
-// }
+@media (max-width: 1000px) {
+    .modal .modal-content {
+        width: 40%;
+    }
+
+    .modal-progress .modal-content-progress {
+        width: 35%;
+    }
+
+    .modal-done .modal-content-done {
+        width: 35%;
+    }
+}
+
+
+
+
+@media (max-width: 860px) {
+    body .header-wrap-trello {
+        width: 70%;
+        padding: 0 30px;
+    }
+
+    body .trello-wrap-card {
+        display: block;
+    }
+
+    body .trello-wrap-card .trello-card-todo {
+        width: 70%;
+        margin: 0 auto 30px;
+
+        .trello-card-todo-body {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            overflow: auto;
+            overflow-y: hidden;
+
+            .trello-card-todo-item {
+                flex: none;
+                width: 45%;
+            }
+        }
+    }
+
+    .trello-card-in-progress {
+        width: 70%;
+        margin: 0 auto 30px;
+
+        .trello-card-in-progress-body {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            overflow: auto;
+            overflow-y: hidden;
+
+            .trello-card-in-progress-item {
+                flex: none;
+                width: 45%;
+            }
+        }
+    }
+
+    .trello-card-done {
+        width: 70%;
+        margin: 0 auto 20px;
+
+        .trello-card-done-body {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            overflow: auto;
+            overflow-y: hidden;
+
+            .trello-card-done-item {
+                flex: none;
+                width: 45%;
+            }
+        }
+    }
+
+    .modal .modal-content {
+        width: 50%;
+    }
+}
+
+
+
+
+@media (max-width: 640px) {
+
+    .trello-card-todo-body {
+        gap: 20px;
+    }
+}
+
+.trello-card-in-progress-body {
+    gap: 20px;
+}
+
+.trello-card-done-body {
+    gap: 20px;
+}
+
+
+.modal-content {
+    width: 35%;
+}
+
+.modal-content-progress {
+    width: 40%;
+}
+
+.modal-content-done {
+    width: 40%;
+}
+
+
+
+
+
+@media (max-width: 605px) {
+    body .header-wrap-trello {
+        width: 55%;
+    }
+
+    body .trello-wrap-card .trello-card-todo {
+        width: 55%;
+
+        .trello-card-todo-body {
+            gap: 40px;
+
+            .trello-card-todo-item {
+                width: 96%;
+            }
+        }
+    }
+
+    .trello-card-in-progress {
+        width: 55%;
+
+        .trello-card-in-progress-body {
+            gap: 40px;
+
+            .trello-card-in-progress-item {
+                width: 96%;
+            }
+        }
+    }
+
+    .trello-card-done {
+        width: 55%;
+
+        .trello-card-done-body {
+            gap: 40px;
+
+            .trello-card-done-item {
+                width: 96%;
+            }
+        }
+    }
+
+    .modal .modal-content {
+        width: 40%;
+
+        .wrap-button {
+
+            .save-button {
+                margin-right: 5px;
+                padding: 10px 10px;
+                font-size: 12px;
+            }
+
+            .cancel-button {
+                margin-left: 5px;
+                padding: 10px 10px;
+                font-size: 12px;
+            }
+
+
+        }
+    }
+
+    .modal-progress .modal-content-progress {
+        width: 35%;
+
+        .save-button-progress {
+            margin-right: 5px;
+            padding: 10px 10px;
+            font-size: 12px;
+        }
+
+        .cancel-button-progress {
+            margin-left: 5px;
+            padding: 10px 10px;
+            font-size: 12px;
+        }
+
+        .modal-title-progress {
+            font-size: 18px;
+        }
+
+        .modal-description-progress {
+            font-size: 14px;
+        }
+
+    }
+
+    .modal-done .modal-content-done {
+
+        .save-button-done {
+            margin-right: 5px;
+            padding: 10px 10px;
+            font-size: 12px;
+        }
+
+        .cancel-button-done {
+            margin-left: 5px;
+            padding: 10px 10px;
+            font-size: 12px;
+        }
+
+
+        .modal-title-done {
+            font-size: 18px;
+        }
+
+        .modal-description-done {
+            font-size: 14px;
+        }
+    }
+
+}
+
+
+
+
+@media (max-width: 455px) {
+    body .header-wrap-trello {
+        width: 63%;
+    }
+
+    body .trello-wrap-card .trello-card-todo {
+        width: 65%;
+
+        .trello-card-todo-body {
+            gap: 64px;
+
+            .trello-card-todo-item {
+                width: 95%;
+            }
+        }
+    }
+
+    .trello-card-in-progress {
+        width: 65%;
+
+        .trello-card-in-progress-body {
+            gap: 64px;
+
+            .trello-card-in-progress-item {
+                width: 95%;
+            }
+        }
+    }
+
+    .trello-card-done {
+        width: 65%;
+
+        .trello-card-done-body {
+            gap: 64px;
+
+            .trello-card-done-item {
+                width: 95%;
+            }
+        }
+    }
+}
+
+
+
+
+@media (max-width: 399px) {
+    body .header-wrap-trello {
+        width: 77%;
+    }
+
+
+    body .trello-wrap-card .trello-card-todo {
+        width: 77%;
+
+        .trello-card-todo-body {
+            gap: 30px;
+
+            .trello-card-todo-item {
+                width: 95%;
+            }
+        }
+    }
+
+    .trello-card-in-progress {
+        width: 77%;
+
+        .trello-card-in-progress-body {
+            gap: 30px;
+
+            .trello-card-in-progress-item {
+                width: 95%;
+            }
+        }
+    }
+
+    .trello-card-done {
+        width: 77%;
+
+        .trello-card-done-body {
+            gap: 30px;
+
+            .trello-card-done-item {
+                width: 95%;
+            }
+        }
+    }
+}
+
+
+
+
+
+@media (max-width: 351px) {
+    body .header-wrap-trello {
+        width: 70%;
+    }
+
+
+    body .trello-wrap-card .trello-card-todo {
+        width: 80%;
+
+        .trello-card-todo-item {
+            width: 94%;
+        }
+    }
+
+    .trello-card-in-progress {
+        width: 80%;
+
+        .trello-card-in-progress-item {
+            width: 94%;
+        }
+    }
+
+    .trello-card-done {
+        width: 80%;
+
+        .trello-card-done-item {
+            width: 94%;
+        }
+    }
+}
+
+
+
+
+
+@media (max-width: 320px) {
+    body .header-wrap-trello {
+        width: 70%;
+    }
+
+
+    body .trello-wrap-card .trello-card-todo {
+        width: 90%;
+
+        .trello-card-todo-item {
+            width: 95%;
+        }
+
+    }
+
+    .trello-card-in-progress {
+        width: 90%;
+
+        .trello-card-in-progress-item {
+            width: 95%;
+        }
+    }
+
+    .trello-card-done {
+        width: 90%;
+
+        .trello-card-done-item {
+            width: 95%;
+        }
+    }
+}
