@@ -50,8 +50,7 @@ trelloCardTodo.appendChild(trelloCardTodoBody);
 
 //обновлене счётчиков
 function updateCounters() {
-    const trelloCardTodoCounter = document.querySelector('.trello-card-todo-counter');
-    const trelloCardTodoBody = document.querySelector('.trello-card-todo-body');
+
     trelloCardTodoCounter.innerText = `${trelloCardTodoBody.querySelectorAll('div.trello-card-todo-item').length}`
 }
 
